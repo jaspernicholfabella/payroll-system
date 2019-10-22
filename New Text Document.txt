@@ -1,0 +1,1 @@
+pyrcc5 AMOLED.qss -o amoled_rc.py
