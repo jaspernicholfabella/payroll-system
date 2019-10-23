@@ -100,7 +100,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -111,12 +111,12 @@
        <rect>
         <x>0</x>
         <y>50</y>
-        <width>631</width>
+        <width>661</width>
         <height>51</height>
        </rect>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;Payroll Information System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;PHRMO Payroll Information System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QPushButton" name="login_logo_button">
@@ -358,7 +358,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;Payroll Information System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;PHRMO Payroll Information System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
      <widget class="QPushButton" name="home_logo">
@@ -772,7 +772,7 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>10</y>
+        <y>20</y>
         <width>341</width>
         <height>21</height>
        </rect>
@@ -790,7 +790,7 @@
       <property name="geometry">
        <rect>
         <x>440</x>
-        <y>0</y>
+        <y>10</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -819,7 +819,7 @@
       <property name="geometry">
        <rect>
         <x>400</x>
-        <y>0</y>
+        <y>10</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -848,7 +848,7 @@
       <property name="geometry">
        <rect>
         <x>360</x>
-        <y>0</y>
+        <y>10</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -877,9 +877,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>40</y>
+        <y>50</y>
         <width>701</width>
-        <height>521</height>
+        <height>511</height>
        </rect>
       </property>
       <column>
@@ -1263,7 +1263,7 @@
       </property>
       <property name="icon">
        <iconset resource="icons.qrc">
-        <normaloff>:/icons/delete.png</normaloff>:/icons/delete.png</iconset>
+        <normaloff>:/icons/trash-can.png</normaloff>:/icons/trash-can.png</iconset>
       </property>
       <property name="iconSize">
        <size>
@@ -1676,7 +1676,7 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QTabWidget" name="tabWidget_2">
+     <widget class="QTabWidget" name="payslip_tab_widget">
       <property name="geometry">
        <rect>
         <x>20</x>
@@ -1850,6 +1850,287 @@
       </widget>
      </widget>
     </widget>
+    <widget class="QWidget" name="tab_9">
+     <attribute name="title">
+      <string>settings</string>
+     </attribute>
+     <widget class="QTableWidget" name="settings_table_widget_users">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>50</y>
+        <width>301</width>
+        <height>192</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>username</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>password</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>previlage</string>
+       </property>
+      </column>
+     </widget>
+     <widget class="QLabel" name="label_14">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>10</y>
+        <width>301</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Users</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="settings_add_user">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>50</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/add-database.png</normaloff>:/icons/add-database.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="settings_delete_user">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>90</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/trash-can.png</normaloff>:/icons/trash-can.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="settings_save">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>130</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/checked.png</normaloff>:/icons/checked.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="settings_warning">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>290</y>
+        <width>301</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="settings_save_2">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>310</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/checked.png</normaloff>:/icons/checked.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="settings_table_widget_signatory">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>310</y>
+        <width>361</width>
+        <height>191</height>
+       </rect>
+      </property>
+      <property name="sizeAdjustPolicy">
+       <enum>QAbstractScrollArea::AdjustToContentsOnFirstShow</enum>
+      </property>
+      <row>
+       <property name="text">
+        <string>1</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>2</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>3</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>4</string>
+       </property>
+      </row>
+      <row>
+       <property name="text">
+        <string>5</string>
+       </property>
+      </row>
+      <column>
+       <property name="text">
+        <string>Name</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Designation</string>
+       </property>
+      </column>
+      <item row="0" column="0">
+       <property name="text">
+        <string>FRANCIS JOSEPH G. ESCUDERO</string>
+       </property>
+      </item>
+      <item row="0" column="1">
+       <property name="text">
+        <string>Governor</string>
+       </property>
+      </item>
+      <item row="1" column="0">
+       <property name="text">
+        <string>CRISTE L. DAGÑALAN</string>
+       </property>
+      </item>
+      <item row="1" column="1">
+       <property name="text">
+        <string>AO IV (HRMO II)</string>
+       </property>
+      </item>
+      <item row="2" column="0">
+       <property name="text">
+        <string>ARTHUR M. BALMADRID</string>
+       </property>
+      </item>
+      <item row="2" column="1">
+       <property name="text">
+        <string>PGDH/PHRMO</string>
+       </property>
+      </item>
+      <item row="3" column="0">
+       <property name="text">
+        <string>MERCEDES J. ATIVO</string>
+       </property>
+      </item>
+      <item row="3" column="1">
+       <property name="text">
+        <string>Provincial Accountant</string>
+       </property>
+      </item>
+      <item row="4" column="0">
+       <property name="text">
+        <string>BELINDA J. GACOSTA</string>
+       </property>
+      </item>
+      <item row="4" column="1">
+       <property name="text">
+        <string>Acting Provincial Treasurer</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="label_15">
+      <property name="geometry">
+       <rect>
+        <x>70</x>
+        <y>270</y>
+        <width>301</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Signatory</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
    <widget class="QWidget" name="_container" native="true">
     <property name="geometry">
@@ -1857,38 +2138,9 @@
       <x>0</x>
       <y>0</y>
       <width>71</width>
-      <height>261</height>
+      <height>321</height>
      </rect>
     </property>
-    <widget class="QPushButton" name="_quit_button">
-     <property name="geometry">
-      <rect>
-       <x>0</x>
-       <y>180</y>
-       <width>71</width>
-       <height>61</height>
-      </rect>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Log-out&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="icons.qrc">
-       <normaloff>:/icons/shutdown.png</normaloff>:/icons/shutdown.png</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>50</width>
-       <height>50</height>
-      </size>
-     </property>
-     <property name="flat">
-      <bool>true</bool>
-     </property>
-    </widget>
     <widget class="QPushButton" name="_payroll_button">
      <property name="geometry">
       <rect>
@@ -1965,6 +2217,64 @@
      <property name="icon">
       <iconset resource="icons.qrc">
        <normaloff>:/icons/home.png</normaloff>:/icons/home.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>50</width>
+       <height>50</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="_settings_button">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>180</y>
+       <width>71</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;settings&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons.qrc">
+       <normaloff>:/icons/support.png</normaloff>:/icons/support.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>45</width>
+       <height>45</height>
+      </size>
+     </property>
+     <property name="flat">
+      <bool>true</bool>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="_quit_button">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>240</y>
+       <width>71</width>
+       <height>61</height>
+      </rect>
+     </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Log-out&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="icons.qrc">
+       <normaloff>:/icons/shutdown.png</normaloff>:/icons/shutdown.png</iconset>
      </property>
      <property name="iconSize">
       <size>
