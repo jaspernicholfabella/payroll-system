@@ -47,7 +47,7 @@
    <property name="title">
     <string>BASIC SALARY INFO</string>
    </property>
-   <widget class="QComboBox" name="comboBox">
+   <widget class="QComboBox" name="_add_employee_name_combo">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -95,7 +95,7 @@
      <string>Amount accrued this period:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit">
+   <widget class="QLineEdit" name="_add_monthly_rate">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -105,7 +105,7 @@
      </rect>
     </property>
     <property name="frame">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -114,7 +114,7 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QComboBox" name="comboBox_2">
+   <widget class="QComboBox" name="_add_designation_combo">
     <property name="geometry">
      <rect>
       <x>140</x>
@@ -143,26 +143,7 @@
      <string>Monthly Rate of Pay:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_3">
-    <property name="geometry">
-     <rect>
-      <x>210</x>
-      <y>150</y>
-      <width>71</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>0</string>
-    </property>
-    <property name="alignment">
-     <set>Qt::AlignCenter</set>
-    </property>
-    <property name="readOnly">
-     <bool>true</bool>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="lineEdit_2">
+   <widget class="QLineEdit" name="_add_ammount_accrued">
     <property name="geometry">
      <rect>
       <x>210</x>
@@ -178,10 +159,29 @@
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
-     <bool>true</bool>
+     <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
+   <widget class="QLineEdit" name="_add_pera">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>150</y>
+      <width>71</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+    <property name="readOnly">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labela">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -219,7 +219,7 @@
      <string>Designation :</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="pushButton">
+   <widget class="QPushButton" name="_add_designation_button">
     <property name="geometry">
      <rect>
       <x>260</x>
@@ -277,7 +277,7 @@
      <string>GSIS EDUC'L. LOAN :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_4">
+   <widget class="QLineEdit" name="_add_tax">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -299,7 +299,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="label_8">
+   <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
       <x>20</x>
@@ -318,7 +318,7 @@
      <string>W/TAX :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_6">
+   <widget class="QLineEdit" name="_add_gsis_educ">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -375,7 +375,7 @@
      <string>PAGIBIG GOV'T :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_5">
+   <widget class="QLineEdit" name="_add_pagibig_personal">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -397,7 +397,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_7">
+   <widget class="QLineEdit" name="_add_pagibig_govt">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -438,7 +438,7 @@
      <string>PAG-IBIG MPL :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_8">
+   <widget class="QLineEdit" name="_add_pagibig_mpl">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -457,7 +457,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_9">
+   <widget class="QLineEdit" name="_add_pagibig_calamity">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -514,7 +514,7 @@
      <string>PAG-IBIG HOUSING LOAN :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_10">
+   <widget class="QLineEdit" name="_add_pagibig_housing">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -549,10 +549,10 @@
      </font>
     </property>
     <property name="text">
-     <string>PHILHEALTH PAGIBIG GOV'T:</string>
+     <string>PHILHEALTH GOV'T:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_11">
+   <widget class="QLineEdit" name="_add_philhealth_personal">
     <property name="geometry">
      <rect>
       <x>200</x>
@@ -593,7 +593,7 @@
      <string>PHILHEALTH PERSONAL:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_12">
+   <widget class="QLineEdit" name="_add_philhealth_govt">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -653,7 +653,7 @@
      <string>RURAL BANK OF PILAR :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_13">
+   <widget class="QLineEdit" name="_add_bank_pilar">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -672,7 +672,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_14">
+   <widget class="QLineEdit" name="_add_gempco_reg_loan">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -691,11 +691,11 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_15">
+   <widget class="QLineEdit" name="_add_gempco_educ_loan">
     <property name="geometry">
      <rect>
       <x>480</x>
-      <y>140</y>
+      <y>110</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -751,11 +751,11 @@
      <string>GEMPCO Reg. Loan :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_16">
+   <widget class="QLineEdit" name="_add_soprecco_reg_loan">
     <property name="geometry">
      <rect>
       <x>480</x>
-      <y>110</y>
+      <y>140</y>
       <width>81</width>
       <height>22</height>
      </rect>
@@ -792,7 +792,7 @@
      <string>SOPRECCO-EDUCL. LOAN :</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_30">
+   <widget class="QLineEdit" name="_add_soprecco_educ_loan">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -814,7 +814,7 @@
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="lineEdit_31">
+   <widget class="QLineEdit" name="_add_soprecco_share">
     <property name="geometry">
      <rect>
       <x>480</x>
@@ -886,6 +886,9 @@
    </property>
    <property name="text">
     <string>0</string>
+   </property>
+   <property name="frame">
+    <bool>false</bool>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>

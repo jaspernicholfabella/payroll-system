@@ -32,5 +32,8 @@
     <file>icons/user-male.png</file>
     <file>icons/xls.png</file>
     <file>icons/SORSOGON.png</file>
+    <file>icons/ph_design.png</file>
+    <file>icons/ph_design_2.png</file>
+
 </qresource>
 </RCC>
