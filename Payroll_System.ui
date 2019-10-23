@@ -287,7 +287,7 @@
          <x>160</x>
          <y>90</y>
          <width>51</width>
-         <height>23</height>
+         <height>31</height>
         </rect>
        </property>
        <property name="font">
@@ -340,7 +340,7 @@
        </rect>
       </property>
       <property name="text">
-       <string> </string>
+       <string/>
       </property>
      </widget>
     </widget>
@@ -351,9 +351,9 @@
      <widget class="QLabel" name="label_12">
       <property name="geometry">
        <rect>
-        <x>40</x>
+        <x>0</x>
         <y>60</y>
-        <width>631</width>
+        <width>721</width>
         <height>51</height>
        </rect>
       </property>
@@ -1644,7 +1644,7 @@
        <rect>
         <x>20</x>
         <y>20</y>
-        <width>111</width>
+        <width>141</width>
         <height>16</height>
        </rect>
       </property>
@@ -1662,9 +1662,9 @@
      <widget class="QLineEdit" name="lineEdit_4">
       <property name="geometry">
        <rect>
-        <x>140</x>
+        <x>162</x>
         <y>20</y>
-        <width>113</width>
+        <width>111</width>
         <height>20</height>
        </rect>
       </property>
@@ -1672,7 +1672,7 @@
      <widget class="QPushButton" name="pushButton_23">
       <property name="geometry">
        <rect>
-        <x>260</x>
+        <x>270</x>
         <y>20</y>
         <width>31</width>
         <height>21</height>
@@ -1889,15 +1889,33 @@
        <property name="text">
         <string>username</string>
        </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
         <string>password</string>
        </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
         <string>previlage</string>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
       </column>
      </widget>
@@ -1928,6 +1946,9 @@
         <height>41</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;add account&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1954,6 +1975,9 @@
         <height>41</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;delete account&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -1979,6 +2003,9 @@
         <width>41</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;edit account&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="text">
        <string/>
@@ -2026,10 +2053,22 @@
        <property name="text">
         <string>Name</string>
        </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
         <string>Designation</string>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
       </column>
      </widget>
@@ -2064,10 +2103,22 @@
        <property name="text">
         <string>Designation </string>
        </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </column>
       <column>
        <property name="text">
         <string>Salary</string>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
       </column>
      </widget>
@@ -2079,6 +2130,9 @@
         <width>41</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;delete salary grade&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="text">
        <string/>
@@ -2124,6 +2178,9 @@
         <height>41</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;add salary grade&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -2150,6 +2207,9 @@
         <height>41</height>
        </rect>
       </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;edit salary grade&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
       <property name="text">
        <string/>
       </property>
@@ -2175,6 +2235,9 @@
         <width>41</width>
         <height>41</height>
        </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;edit signatory&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="text">
        <string/>

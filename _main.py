@@ -18,7 +18,6 @@ import sqlconn as sqc
 
 
 
-
 ui, _ = loadUiType('Payroll_System.ui')
 ui2, _ = loadUiType('Add_Employee.ui')
 
@@ -45,6 +44,12 @@ class MainApp(QMainWindow, ui):
         self.payslip_tab_widget.tabBar().setVisible(False)
         self.payslip_tab_widget.setCurrentIndex(0)
         self.settings_tab_defaults()
+        self.settings_table_widget_accounts.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.settings_table_widget_salary_grade.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.settings_table_widget_signatory.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.settings_table_widget_accounts.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
+        self.settings_table_widget_salary_grade.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
+        self.settings_table_widget_signatory.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
 
 
     def Handle_Buttons(self):
