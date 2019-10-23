@@ -57,9 +57,9 @@ class Database():
                     # mysql_key_block_size="1024",
                      )
 
-    salarygrade = Table('salarygrade',meta,
+    payroll_salarygrade = Table('payroll_salarygrade',meta,
                         Column('salaryid', INTEGER, primary_key=True),
-                        Column('salarytitle', VARCHAR(6)),
+                        Column('salarytitle', VARCHAR(50)),
                         Column('amount',Float))
 
     payroll_admin = Table('payroll_admin',meta,
@@ -67,6 +67,11 @@ class Database():
                           Column('username',VARCHAR(50)),
                           Column('password',VARCHAR(50)),
                           Column('previlage',VARCHAR(50)))
+
+    payroll_signatory = Table('payroll_signatory',meta,
+                              Column('signatoryid',INTEGER,primary_key=True),
+                              Column('name',String),
+                              Column('designation',String))
 
     payroll_record = Table('payroll_record',meta,
                            Column('payrollid',INTEGER,primary_key=True),
@@ -95,3 +100,26 @@ class Database():
                            Column('employee_id',INTEGER))
 
     meta.create_all(engine)
+
+    conn = engine.connect()
+    s = payroll_signatory.select()
+    s_value = conn.execute(s)
+    x = 0
+    for val in s_value:
+        x += 1
+
+
+    signatories = {
+        'FRANCIS JOSEPH G. ESCUDERO':'Governor',
+        'CRISTE L. DAGÑALAN':'AO IV (HRMO II)',
+        'ARTHUR M. BALMADRID':'PGDH/PHRMO',
+        'MERCEDES J. ATIVO':'Provincial Accountant',
+        'BELINDA J. GACOSTA':'Acting Provincial Treasurer'
+    }
+
+
+    if x < 4:
+        for key,item in signatories.items():
+            print('{} : {}'.format(key,item))
+            ins = payroll_signatory.insert().values(name = key,designation = item)
+            result = conn.execute(ins)
