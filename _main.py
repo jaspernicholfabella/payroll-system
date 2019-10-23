@@ -44,7 +44,7 @@ class MainApp(QMainWindow, ui):
         self.tabWidget.setCurrentIndex(0)
         self.payslip_tab_widget.tabBar().setVisible(False)
         self.payslip_tab_widget.setCurrentIndex(0)
-
+        self.settings_tab_defaults()
 
 
     def Handle_Buttons(self):
@@ -62,15 +62,18 @@ class MainApp(QMainWindow, ui):
         self._settings_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(6))
         self.settings_table_widget_signatory.resizeColumnsToContents()
 
+########################MENU BUTTONS##################################
 
     def _quit_button_action(self):
         self.login_warning.setText(' ')
         self.tabWidget.setCurrentIndex(0)
         self._container.setVisible(False)
 
+#--------------------------------------------------------------------#
 
 
 
+######################## Login Tab####################################
     def login_button_action(self):
         username = self.login_username.text()
         password = self.login_password.text()
@@ -111,6 +114,11 @@ class MainApp(QMainWindow, ui):
         else:
             self.login_warning.setText('Wrong Username or Password.')
 
+#--------------------------------------------------------------------#
+
+
+#######################PAYROLL_HOME TAB ##############################
+
     def payroll_home_new_action(self):
         self.tabWidget.setCurrentIndex(4)
 
@@ -122,16 +130,67 @@ class MainApp(QMainWindow, ui):
     def payroll_home_view_action(self):
         self.tabWidget.setCurrentIndex(3)
 
+#--------------------------------------------------------------------#
+
+
+
+#######################PAYROLL_AE TAB ###############################
+
     def payroll_ae_add_person_action(self):
         dialog = Add_Employee_Dialogue(self)
         dialog.show()
 
+#--------------------------------------------------------------------#
+
+
+
+
+####################### SETTINGS TAB ###############################
+
+    def settings_tab_defaults(self):
+        engine = sqc.Database().engine
+        payroll_admin = sqc.Database().payroll_admin
+        payroll_salarygrade = sqc.Database().payroll_salarygrade
+        payroll_signatory = sqc.Database().payroll_signatory
+
+        conn = engine.connect()
+        s = payroll_admin.select()
+        s_value = conn.execute(s)
+        table = self.settings_table_widget_accounts
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[2])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[3])))
+
+        s = payroll_salarygrade.select()
+        s_value = conn.execute(s)
+        table=self.settings_table_widget_salary_grade
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[2])))
+
+        s = payroll_signatory.select()
+        s_value = conn.execute(s)
+        table=self.settings_table_widget_signatory
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[2])))
+
+
+#--------------------------------------------------------------------#
 
 
 
 
 
 
+###########################################DIALOGS#####################################
 
 
 class Add_Employee_Dialogue(QDialog,ui2):
@@ -146,7 +205,7 @@ class Add_Employee_Dialogue(QDialog,ui2):
     def Handle_Button_Changes(self):
         pass
 
-
+#########################################################################################
 
 def main():
     app = QApplication(sys.argv)

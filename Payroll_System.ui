@@ -87,7 +87,7 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>Payroll Information System</string>
+   <string>PHRMO Payroll Information System</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QTabWidget" name="tabWidget">
@@ -884,6 +884,17 @@
       </property>
       <column>
        <property name="text">
+        <string>   ID   </string>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
         <string>   NAME   </string>
        </property>
        <property name="font">
@@ -1371,6 +1382,17 @@
       </property>
       <column>
        <property name="text">
+        <string>   ID   </string>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
         <string>   NAME   </string>
        </property>
        <property name="font">
@@ -1854,10 +1876,10 @@
      <attribute name="title">
       <string>settings</string>
      </attribute>
-     <widget class="QTableWidget" name="settings_table_widget_users">
+     <widget class="QTableWidget" name="settings_table_widget_accounts">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>80</x>
         <y>80</y>
         <width>301</width>
         <height>192</height>
@@ -1897,10 +1919,10 @@
        <string>Accounts</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="settings_add_user">
+     <widget class="QPushButton" name="settings_add_account">
       <property name="geometry">
        <rect>
-        <x>350</x>
+        <x>40</x>
         <y>80</y>
         <width>41</width>
         <height>41</height>
@@ -1923,10 +1945,10 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="settings_delete_user">
+     <widget class="QPushButton" name="settings_delete_account">
       <property name="geometry">
        <rect>
-        <x>350</x>
+        <x>40</x>
         <y>160</y>
         <width>41</width>
         <height>41</height>
@@ -1949,10 +1971,10 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="settings_save">
+     <widget class="QPushButton" name="settings_edit_account">
       <property name="geometry">
        <rect>
-        <x>350</x>
+        <x>40</x>
         <y>120</y>
         <width>41</width>
         <height>41</height>
@@ -1988,36 +2010,10 @@
        <string/>
       </property>
      </widget>
-     <widget class="QPushButton" name="settings_save_2">
-      <property name="geometry">
-       <rect>
-        <x>540</x>
-        <y>330</y>
-        <width>41</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="icons.qrc">
-        <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>25</width>
-        <height>30</height>
-       </size>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
      <widget class="QTableWidget" name="settings_table_widget_signatory">
       <property name="geometry">
        <rect>
-        <x>180</x>
+        <x>220</x>
         <y>330</y>
         <width>361</width>
         <height>191</height>
@@ -2055,10 +2051,10 @@
        <string>Signatory</string>
       </property>
      </widget>
-     <widget class="QTableWidget" name="settings_table_widget_users_2">
+     <widget class="QTableWidget" name="settings_table_widget_salary_grade">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>460</x>
         <y>80</y>
         <width>221</width>
         <height>192</height>
@@ -2075,10 +2071,10 @@
        </property>
       </column>
      </widget>
-     <widget class="QPushButton" name="settings_delete_user_2">
+     <widget class="QPushButton" name="settings_delete_salary_grade">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>420</x>
         <y>160</y>
         <width>41</width>
         <height>41</height>
@@ -2104,7 +2100,7 @@
      <widget class="QLabel" name="label_16">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>430</x>
         <y>40</y>
         <width>221</width>
         <height>31</height>
@@ -2119,10 +2115,10 @@
        <string>Salary Grade</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="settings_add_user_2">
+     <widget class="QPushButton" name="settings_add_salary_grade">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>420</x>
         <y>80</y>
         <width>41</width>
         <height>41</height>
@@ -2145,11 +2141,37 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="settings_save_3">
+     <widget class="QPushButton" name="settings_edit_slary_grade">
       <property name="geometry">
        <rect>
-        <x>630</x>
+        <x>420</x>
         <y>120</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="settings_edit_signatory">
+      <property name="geometry">
+       <rect>
+        <x>180</x>
+        <y>330</y>
         <width>41</width>
         <height>41</height>
        </rect>
