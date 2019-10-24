@@ -13,17 +13,18 @@ from sqlalchemy import Table, Column,VARCHAR,INTEGER,Float,String, MetaData,Fore
 from sqlalchemy.sql import exists
 import subprocess
 import sqlconn as sqc
-
+import datetime
 ##globals
 global settings_table_widget_accounts
 global settings_table_widget_salary_grade
 global settings_table_widget_signatory
-
-
+global payroll_home_list_dict
+global payroll_home_list_widget
 
 
 
 main_ui, _ = loadUiType('Payroll_System.ui')
+add_payroll_ui, _ = loadUiType('Add_Payroll.ui')
 add_employee_ui, _ = loadUiType('Add_Employee.ui')
 accounts_ui, _ = loadUiType('Accounts.ui')
 designation_ui, _ = loadUiType('Designation.ui')
@@ -43,13 +44,14 @@ class MainApp(QMainWindow, main_ui):
 
 
     def Default_Text(self):
-        #self.login_title.setText('PHRMO Payroll Information System')
-        #self.home_title.setText('PHRMO Payroll Information System')
-        #self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
-        #self.payroll_home_title.setText('Payroll Record')
-        #self.settings_account_title.setText('Accounts')
-        #self.settings_salary_grade_title.setText('Salary Grade')
-        #self.settings_signatory_title.setText('Signatory')
+        self.login_title.setText('PHRMO Payroll Information System')
+        self.home_title.setText('PHRMO Payroll Information System')
+        self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
+        self.payroll_home_title.setText('Payroll Record')
+        self.settings_account_title.setText('Accounts')
+        self.settings_salary_grade_title.setText('Salary Grade')
+        self.settings_signatory_title.setText('Signatory')
+        self.payslip_title.setText('Employee Payslip Records')
         pass
 
 
@@ -58,6 +60,7 @@ class MainApp(QMainWindow, main_ui):
         global settings_table_widget_accounts
         global settings_table_widget_salary_grade
         global settings_table_widget_signatory
+        global payroll_home_list_widget
         ##main
         self._container.setVisible(False)
         self.tabWidget.tabBar().setVisible(False)
@@ -69,6 +72,7 @@ class MainApp(QMainWindow, main_ui):
         self.home_logo.setEnabled(False)
         self.home_design.setEnabled(False)
         ##payroll_home
+        payroll_home_list_widget = self.payroll_home_list_widget
         self.payroll_home_logo.setEnabled(False)
         self.payroll_home_image.setEnabled(False)
         self.payroll_home_design.setEnabled(False)
@@ -77,6 +81,8 @@ class MainApp(QMainWindow, main_ui):
         ##payroll_ae
         self.payroll_ae_table_widget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
         ##payslip
+        self.payslip_logo_1.setEnabled(False)
+        self.payslip_logo_2.setEnabled(False)
         self.payslip_tab_widget.tabBar().setVisible(False)
         self.payslip_tab_widget.setCurrentIndex(0)
         ##settings
@@ -105,7 +111,8 @@ class MainApp(QMainWindow, main_ui):
         self.login_button.clicked.connect(self.login_button_action)
         ##main
         self._home_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(1))
-        self._payroll_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
+        self._payroll_button.clicked.connect(self.show_payroll_home)
+        self._payroll_button.clicked.connect(lambda:self.tabWidget.setCurrentIndex(2))
         self._payslip_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(5))
         self._quit_button.clicked.connect(self._quit_button_action)
         self._settings_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(6))
@@ -184,7 +191,10 @@ class MainApp(QMainWindow, main_ui):
 #######################PAYROLL_HOME TAB ##############################
 
     def payroll_home_new_action(self):
-        self.tabWidget.setCurrentIndex(4)
+        ad = Add_Payroll_Dialogue(self)
+        ad.show()
+        ad.Show_Payroll('add')
+        #self.tabWidget.setCurrentIndex(4)
 
 
     def payroll_home_edit_action(self):
@@ -193,6 +203,26 @@ class MainApp(QMainWindow, main_ui):
 
     def payroll_home_view_action(self):
         self.tabWidget.setCurrentIndex(3)
+
+
+    def show_payroll_home(self):
+        global payroll_home_list_dict
+        global payroll_home_list_widget
+        payroll_home_list_widget.clear()
+        payroll_home_list_dict = {}
+
+        engine = sqc.Database().engine
+        conn = engine.connect()
+        payroll_bundle = sqc.Database().payroll_bundle
+        s = payroll_bundle.select()
+        s_value = conn.execute(s)
+        for val in s_value:
+            payroll_home_list_dict.update({
+                val[0] : '{}|{}'.format(val[1],val[2])
+            })
+        for key,value in payroll_home_list_dict.items():
+            item = QtWidgets.QListWidgetItem(value)
+            payroll_home_list_widget.addItem(item)
 
 #--------------------------------------------------------------------#
 
@@ -275,18 +305,11 @@ class MainApp(QMainWindow, main_ui):
 
     def settings_account_table_add(self,table):
         try:
-            r = table.currentRow()
-            id = table.item(r,0).text()
             ad = Accounts_Dialogue(self)
             ad.show()
             ad.ShowDialogue(id,'','',operationType='add')
         except:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Critical)
-            msg.setText("Error")
-            msg.setInformativeText('No Rows Selected')
-            msg.setWindowTitle("Error")
-            msg.exec_()
+            pass
 
     def settings_account_table_delete(self,table):
         r = table.currentRow()
@@ -320,6 +343,97 @@ class MainApp(QMainWindow, main_ui):
 
 ###########################################DIALOGS#####################################
 
+class Add_Payroll_Dialogue(QDialog,add_payroll_ui):
+    operationType = ''
+    def __init__(self,parent=None):
+        super(Add_Payroll_Dialogue,self).__init__(parent)
+        self.setupUi(self)
+        self.Handle_UI_Changes()
+
+    def Handle_UI_Changes(self):
+        self.logo.setEnabled(False)
+
+        month = convertMonth(int(datetime.datetime.now().month))
+
+        day = int(datetime.datetime.now().day)
+        year = int(datetime.datetime.now().year)
+
+        index = self.from_year.findText('{}'.format(year),QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.from_year.setCurrentIndex(index)
+        index = self.from_month.findText('{}'.format(month),QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.from_month.setCurrentIndex(index)
+        index = self.from_day.findText('{}'.format(day),QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.from_day.setCurrentIndex(index)
+        index = self.to_year.findText('{}'.format(year),QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.to_year.setCurrentIndex(index)
+        index = self.to_month.findText('{}'.format(month),QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.to_month.setCurrentIndex(index)
+        index = self.to_day.findText('{}'.format(day),QtCore.Qt.MatchFixedString)
+        if index >= 0:
+            self.to_day.setCurrentIndex(index)
+
+
+
+    def Show_Payroll(self,operationType):
+        self.operationType = operationType
+        self.buttonBox.accepted.connect(self.ok_button)
+
+
+    def ok_button(self):
+        if self.operationType == 'add':
+            engine = sqc.Database().engine
+            payroll_bundle = sqc.Database().payroll_bundle
+            conn = engine.connect()
+
+            try:
+                py_date_from = '{}-{}-{}'.format(self.from_month.currentText(),self.from_day.currentText(),self.from_year.currentText())
+                py_date_to = '{}-{}-{}'.format(self.to_month.currentText(), self.to_day.currentText(),self.to_year.currentText())
+                s = payroll_bundle.insert().values(
+                    payroll_date_from=py_date_from,
+                    payroll_date_to=py_date_to
+                )
+                conn.execute(s)
+
+            except:
+                msg = QMessageBox()
+                msg.setIcon(QMessageBox.Critical)
+                msg.setText("Error")
+                msg.setInformativeText('Error in data input')
+                msg.setWindowTitle("Error")
+                msg.exec_()
+        self.show_payroll_home()
+
+
+    def show_payroll_home(self):
+        global payroll_home_list_dict
+        global payroll_home_list_widget
+        payroll_home_list_widget.clear()
+        payroll_home_list_dict = {}
+
+        engine = sqc.Database().engine
+        conn = engine.connect()
+        payroll_bundle = sqc.Database().payroll_bundle
+        s = payroll_bundle.select()
+        s_value = conn.execute(s)
+        for val in s_value:
+            payroll_home_list_dict.update({
+                val[0] : '{}|{}'.format(val[1],val[2])
+            })
+        for key,value in payroll_home_list_dict.items():
+            item = QtWidgets.QListWidgetItem(value)
+            payroll_home_list_widget.addItem(item)
+
+
+
+
+
+
+
 
 class Add_Employee_Dialogue(QDialog,add_employee_ui):
     def __init__(self,parent=None):
@@ -333,7 +447,12 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
     def Handle_Button_Changes(self):
         pass
 
-######################################Accounts Dialog##########################################
+
+
+
+
+
+######################################Settings Dialog##########################################
 
 class Accounts_Dialogue(QDialog,accounts_ui):
     edit_id = 0
@@ -430,7 +549,22 @@ class Signatories_Dialogue(QDialog,signatories_ui):
 
 
 
-
+def convertMonth(month):
+    tempdict = {
+        1 : 'January',
+        2 : 'February',
+        3 : 'March',
+        4 : 'April',
+        5 : 'May',
+        6 : 'June',
+        7 : 'July',
+        8 : 'August',
+        9 : 'September',
+        10 : 'October',
+        11 : 'November',
+        12 : 'December'
+    }
+    return tempdict[month]
 
 
 

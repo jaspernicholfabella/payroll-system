@@ -73,9 +73,15 @@ class Database():
                               Column('name',String),
                               Column('designation',String))
 
+    payroll_bundle = Table('payroll_bundle',meta,
+                           Column('payrollid',INTEGER,primary_key=True),
+                           Column('payroll_date_from',String),
+                           Column('payroll_date_to',String))
+
+
     payroll_record = Table('payroll_record',meta,
                            Column('payrollid',INTEGER,primary_key=True),
-                           Column('payroll_date',Date),
+                           Column('payroll_date',String),
                            Column('name',String),
                            Column('designation',String),
                            Column('monthly_rate',Float),
