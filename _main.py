@@ -15,6 +15,9 @@ import subprocess
 import sqlconn as sqc
 
 ##globals
+global settings_table_widget_accounts
+global settings_table_widget_salary_grade
+global settings_table_widget_signatory
 
 
 
@@ -51,6 +54,10 @@ class MainApp(QMainWindow, main_ui):
 
 
     def Handle_UI_Changes(self):
+        ##globals
+        global settings_table_widget_accounts
+        global settings_table_widget_salary_grade
+        global settings_table_widget_signatory
         ##main
         self._container.setVisible(False)
         self.tabWidget.tabBar().setVisible(False)
@@ -86,6 +93,9 @@ class MainApp(QMainWindow, main_ui):
         self.settings_table_widget_accounts.setColumnHidden(0,True)
         self.settings_table_widget_salary_grade.setColumnHidden(0,True)
         self.settings_table_widget_signatory.setColumnHidden(0,True)
+        settings_table_widget_accounts = self.settings_table_widget_accounts
+        settings_table_widget_salary_grade = self.settings_table_widget_salary_grade
+        settings_table_widget_signatory = self.settings_table_widget_signatory
 
 
 
@@ -110,10 +120,10 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_ae_add_person.clicked.connect(self.payroll_ae_add_person_action)
         self.payroll_ae_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
         ##settings
-        self.settings_edit_account.clicked.connect(lambda: self.settings_table_widget_edit(self.settings_table_widget_accounts))
-
-
-
+        self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
+        self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
+        self.settings_delete_account.clicked.connect(lambda: self.settings_account_table_delete(self.settings_table_widget_accounts))
+        self.settings_edit_signatory.clicked.connect(lambda: self.settings_signatory_table_edit(self.settings_table_widget_signatory))
 
 
 ########################MENU BUTTONS##################################
@@ -244,19 +254,17 @@ class MainApp(QMainWindow, main_ui):
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
 
 
-    def settings_table_widget_edit(self,table):
+    def settings_account_table_edit(self,table):
         try:
             r = table.currentRow()
             id = table.item(r,0).text()
             username = table.item(r,1).text()
             password = table.item(r,2).text()
             previlage = table.item(r,3).text()
-            print('{} - {} - {} - {}'.format(id,username,password,previlage))
 
             ad = Accounts_Dialogue(self)
             ad.show()
-            ad.ShowDialogue(id,username,password)
-
+            ad.ShowDialogue(id,username,password,operationType='edit')
         except:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -265,11 +273,48 @@ class MainApp(QMainWindow, main_ui):
             msg.setWindowTitle("Error")
             msg.exec_()
 
+    def settings_account_table_add(self,table):
+        try:
+            r = table.currentRow()
+            id = table.item(r,0).text()
+            ad = Accounts_Dialogue(self)
+            ad.show()
+            ad.ShowDialogue(id,'','',operationType='add')
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No Rows Selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 
+    def settings_account_table_delete(self,table):
+        r = table.currentRow()
+        id = table.item(r, 0).text()
+        engine = sqc.Database().engine
+        conn = engine.connect()
+        payroll_admin = sqc.Database().payroll_admin
+        s = payroll_admin.delete().where(payroll_admin.c.userid == id)
+        conn.execute(s)
+        self.show_settings()
+
+    def settings_signatory_table_edit(self,table):
+        try:
+            r = table.currentRow()
+            id = table.item(r,0).text()
+            name = table.item(r,1).text()
+            designation = table.item(r,2).text()
+            ad = Signatories_Dialogue(self)
+            ad.show()
+            ad.ShowDialogue(id,name,designation)
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No Rows Selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 #--------------------------------------------------------------------#
-
-
-
 
 
 
@@ -288,17 +333,103 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
     def Handle_Button_Changes(self):
         pass
 
-#########################################################################################
+######################################Accounts Dialog##########################################
 
 class Accounts_Dialogue(QDialog,accounts_ui):
+    edit_id = 0
+    operationType = ''
     def __init__(self,parent=None):
         super(Accounts_Dialogue,self).__init__(parent)
         self.setupUi(self)
 
-
-    def ShowDialogue(self,id,username,password,dependencies=''):
+    def ShowDialogue(self,id,username,password,dependencies='',operationType = ''):
         self.username.setText(username)
         self.password.setText(password)
+        self.edit_id = id
+        self.operationType = operationType
+        self.buttonBox.accepted.connect(self.ok_button)
+
+    def ok_button(self):
+        engine = sqc.Database().engine
+        payroll_admin = sqc.Database().payroll_admin
+        conn = engine.connect()
+
+        if self.operationType == 'edit':
+            s = payroll_admin.update().where(payroll_admin.c.userid == self.edit_id).\
+                values(username = self.username.text(),
+                       password = self.password.text(),
+                       previlage = self.previlage_combo.currentText())
+            conn.execute(s)
+            self.show_settings()
+
+        elif self.operationType == 'add':
+            s = payroll_admin.insert().values(
+                username=self.username.text(),
+                password=self.password.text(),
+                previlage=self.previlage_combo.currentText()
+            )
+            conn.execute(s)
+            self.show_settings()
+
+    def show_settings(self):
+        global settings_table_widget_accounts
+        settings_table_widget_accounts.setRowCount(0)
+        engine = sqc.Database().engine
+        payroll_admin = sqc.Database().payroll_admin
+        conn = engine.connect()
+        s = payroll_admin.select()
+        s_value = conn.execute(s)
+        table = settings_table_widget_accounts
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+            table.setItem(row_position, 3, QTableWidgetItem(str(val[3])))
+
+
+class Signatories_Dialogue(QDialog,signatories_ui):
+    edit_id = 0
+    def __init__(self,parent=None):
+        super(Signatories_Dialogue,self).__init__(parent)
+        self.setupUi(self)
+
+    def ShowDialogue(self,id,name,designation):
+        self.name.setText(name)
+        self.designation.setText(designation)
+        self.edit_id = id
+        self.buttonBox.accepted.connect(self.ok_button)
+
+    def ok_button(self):
+        engine = sqc.Database().engine
+        payroll_signatory = sqc.Database().payroll_signatory
+        conn = engine.connect()
+        s = payroll_signatory.update().where(payroll_signatory.c.signatoryid == self.edit_id).\
+            values(name = self.name.text(),
+                   designation = self.designation.text())
+        conn.execute(s)
+        self.show_settings()
+
+    def show_settings(self):
+        global settings_table_widget_signatory
+        settings_table_widget_signatory.setRowCount(0)
+        engine = sqc.Database().engine
+        payroll_signatory = sqc.Database().payroll_signatory
+        conn = engine.connect()
+        s = payroll_signatory.select()
+        s_value = conn.execute(s)
+        table = settings_table_widget_signatory
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+
+
+
+
 
 
 
