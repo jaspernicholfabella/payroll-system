@@ -106,17 +106,28 @@
      <attribute name="title">
       <string>login</string>
      </attribute>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="login_title">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>50</y>
+        <y>40</y>
         <width>661</width>
-        <height>51</height>
+        <height>61</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>22</pointsize>
+        <weight>50</weight>
+        <bold>false</bold>
+       </font>
+      </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:22pt;&quot;&gt;PHRMO Payroll Information System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QPushButton" name="login_logo_button">
@@ -348,17 +359,26 @@
      <attribute name="title">
       <string>home</string>
      </attribute>
-     <widget class="QLabel" name="label_12">
+     <widget class="QLabel" name="home_title">
       <property name="geometry">
        <rect>
         <x>0</x>
-        <y>60</y>
+        <y>50</y>
         <width>721</width>
-        <height>51</height>
+        <height>61</height>
        </rect>
       </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>26</pointsize>
+       </font>
+      </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:26pt;&quot;&gt;PHRMO Payroll Information System&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QPushButton" name="home_logo">
@@ -417,7 +437,7 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_13">
+     <widget class="QLabel" name="home_text">
       <property name="geometry">
        <rect>
         <x>40</x>
@@ -427,7 +447,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>This System is created as a Capstone Project from Sorsogon State College 2019</string>
+       <string/>
       </property>
       <property name="alignment">
        <set>Qt::AlignCenter</set>
@@ -612,23 +632,26 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label">
+     <widget class="QLabel" name="payroll_home_title">
       <property name="geometry">
        <rect>
         <x>0</x>
         <y>60</y>
         <width>261</width>
-        <height>31</height>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
        <font>
-        <weight>50</weight>
-        <bold>false</bold>
+        <family>Segoe UI</family>
+        <pointsize>18</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;Payroll Record&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QListWidget" name="payroll_home_list_widget">
@@ -1887,6 +1910,11 @@
       </property>
       <column>
        <property name="text">
+        <string>id</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
         <string>username</string>
        </property>
        <property name="font">
@@ -1919,7 +1947,7 @@
        </property>
       </column>
      </widget>
-     <widget class="QLabel" name="label_14">
+     <widget class="QLabel" name="settings_account_title">
       <property name="geometry">
        <rect>
         <x>50</x>
@@ -1930,11 +1958,12 @@
       </property>
       <property name="font">
        <font>
+        <family>Segoe UI</family>
         <pointsize>16</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Accounts</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="settings_add_account">
@@ -2051,6 +2080,11 @@
       </property>
       <column>
        <property name="text">
+        <string>id</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
         <string>Name</string>
        </property>
        <property name="font">
@@ -2072,7 +2106,7 @@
        </property>
       </column>
      </widget>
-     <widget class="QLabel" name="label_15">
+     <widget class="QLabel" name="settings_signatory_title">
       <property name="geometry">
        <rect>
         <x>180</x>
@@ -2083,11 +2117,12 @@
       </property>
       <property name="font">
        <font>
+        <family>Segoe UI</family>
         <pointsize>16</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Signatory</string>
+       <string/>
       </property>
      </widget>
      <widget class="QTableWidget" name="settings_table_widget_salary_grade">
@@ -2099,6 +2134,11 @@
         <height>192</height>
        </rect>
       </property>
+      <column>
+       <property name="text">
+        <string>id</string>
+       </property>
+      </column>
       <column>
        <property name="text">
         <string>Designation </string>
@@ -2151,7 +2191,7 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="label_16">
+     <widget class="QLabel" name="settings_salary_grade_title">
       <property name="geometry">
        <rect>
         <x>430</x>
@@ -2162,11 +2202,12 @@
       </property>
       <property name="font">
        <font>
+        <family>Segoe UI</family>
         <pointsize>16</pointsize>
        </font>
       </property>
       <property name="text">
-       <string>Salary Grade</string>
+       <string/>
       </property>
      </widget>
      <widget class="QPushButton" name="settings_add_salary_grade">

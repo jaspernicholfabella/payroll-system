@@ -1,7 +1,7 @@
 #✏✏✏✏✏✏✐✐✐✐✎✎✎✎✒✒✒✒✑✑✑✑✑✉✉✉✉
 import sys
 import os
-from PyQt5 import QtCore,QtGui,QtWidgets
+from PyQt5 import QtCore,QtGui,QtWidgets,uic
 from PyQt5.QtGui import QIcon,QPixmap
 from PyQt5.uic import loadUiType
 from PyQt5.QtWidgets import *
@@ -14,58 +14,107 @@ from sqlalchemy.sql import exists
 import subprocess
 import sqlconn as sqc
 
+##globals
 
 
 
 
-ui, _ = loadUiType('Payroll_System.ui')
-ui2, _ = loadUiType('Add_Employee.ui')
 
-class MainApp(QMainWindow, ui):
+main_ui, _ = loadUiType('Payroll_System.ui')
+add_employee_ui, _ = loadUiType('Add_Employee.ui')
+accounts_ui, _ = loadUiType('Accounts.ui')
+designation_ui, _ = loadUiType('Designation.ui')
+signatories_ui, _ = loadUiType('Signatories.ui')
+
+
+
+
+class MainApp(QMainWindow, main_ui):
     def __init__(self):
         QMainWindow.__init__(self)
         self.setupUi(self)
         self.Handle_UI_Changes()
         self.Handle_Buttons()
+        self.Default_Text()
+
+
+
+    def Default_Text(self):
+        #self.login_title.setText('PHRMO Payroll Information System')
+        #self.home_title.setText('PHRMO Payroll Information System')
+        #self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
+        #self.payroll_home_title.setText('Payroll Record')
+        #self.settings_account_title.setText('Accounts')
+        #self.settings_salary_grade_title.setText('Salary Grade')
+        #self.settings_signatory_title.setText('Signatory')
+        pass
+
 
     def Handle_UI_Changes(self):
+        ##main
+        self._container.setVisible(False)
+        self.tabWidget.tabBar().setVisible(False)
+        self.tabWidget.setCurrentIndex(0)
+        ##login
         self.login_logo_button.setEnabled(False)
         self.login_design_button.setEnabled(False)
+        ##home
         self.home_logo.setEnabled(False)
         self.home_design.setEnabled(False)
+        ##payroll_home
         self.payroll_home_logo.setEnabled(False)
         self.payroll_home_image.setEnabled(False)
         self.payroll_home_design.setEnabled(False)
-        self._container.setVisible(False)
+        ##payroll_view
         self.payroll_view_table_widget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        ##payroll_ae
         self.payroll_ae_table_widget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
-        self.tabWidget.tabBar().setVisible(False)
-        self.tabWidget.setCurrentIndex(0)
+        ##payslip
         self.payslip_tab_widget.tabBar().setVisible(False)
         self.payslip_tab_widget.setCurrentIndex(0)
-        self.settings_tab_defaults()
+        ##settings
+        self.show_settings()
         self.settings_table_widget_accounts.setEditTriggers(QTableWidget.NoEditTriggers)
         self.settings_table_widget_salary_grade.setEditTriggers(QTableWidget.NoEditTriggers)
         self.settings_table_widget_signatory.setEditTriggers(QTableWidget.NoEditTriggers)
         self.settings_table_widget_accounts.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
         self.settings_table_widget_salary_grade.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
         self.settings_table_widget_signatory.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
+        #self.settings_table_widget_accounts.resizeColumnsToContents()
+        #self.settings_table_widget_salary_grade.resizeColumnsToContents()
+        self.settings_table_widget_signatory.resizeColumnsToContents()
+        self.settings_table_widget_accounts.setColumnHidden(0,True)
+        self.settings_table_widget_salary_grade.setColumnHidden(0,True)
+        self.settings_table_widget_signatory.setColumnHidden(0,True)
+
+
 
 
     def Handle_Buttons(self):
+        ##login
         self.login_button.clicked.connect(self.login_button_action)
+        ##main
         self._home_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(1))
         self._payroll_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
-        self.payroll_home_new.clicked.connect(self.payroll_home_new_action)
-        self.payroll_home_edit.clicked.connect(self.payroll_home_edit_action)
-        self.payroll_home_view.clicked.connect(self.payroll_home_view_action)
-        self.payroll_view_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
-        self.payroll_ae_add_person.clicked.connect(self.payroll_ae_add_person_action)
-        self.payroll_ae_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
         self._payslip_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(5))
         self._quit_button.clicked.connect(self._quit_button_action)
         self._settings_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(6))
-        self.settings_table_widget_signatory.resizeColumnsToContents()
+        self._settings_button.clicked.connect(self.show_settings)
+        ##payroll_home
+        self.payroll_home_new.clicked.connect(self.payroll_home_new_action)
+        self.payroll_home_edit.clicked.connect(self.payroll_home_edit_action)
+        self.payroll_home_view.clicked.connect(self.payroll_home_view_action)
+        ##payroll_view
+        self.payroll_view_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
+        ##payroll_ae
+        self.payroll_ae_add_person.clicked.connect(self.payroll_ae_add_person_action)
+        self.payroll_ae_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
+        ##settings
+        self.settings_edit_account.clicked.connect(lambda: self.settings_table_widget_edit(self.settings_table_widget_accounts))
+
+
+
+
 
 ########################MENU BUTTONS##################################
 
@@ -152,7 +201,11 @@ class MainApp(QMainWindow, ui):
 
 ####################### SETTINGS TAB ###############################
 
-    def settings_tab_defaults(self):
+    def show_settings(self):
+        self.settings_table_widget_accounts.setRowCount(0)
+        self.settings_table_widget_salary_grade.setRowCount(0)
+        self.settings_table_widget_signatory.setRowCount(0)
+
         engine = sqc.Database().engine
         payroll_admin = sqc.Database().payroll_admin
         payroll_salarygrade = sqc.Database().payroll_salarygrade
@@ -165,9 +218,10 @@ class MainApp(QMainWindow, ui):
         for val in s_value:
             row_position = table.rowCount()
             table.insertRow(row_position)
-            table.setItem(row_position, 0, QTableWidgetItem(str(val[1])))
-            table.setItem(row_position, 1, QTableWidgetItem(str(val[2])))
-            table.setItem(row_position, 2, QTableWidgetItem(str(val[3])))
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+            table.setItem(row_position, 3, QTableWidgetItem(str(val[3])))
 
         s = payroll_salarygrade.select()
         s_value = conn.execute(s)
@@ -175,8 +229,9 @@ class MainApp(QMainWindow, ui):
         for val in s_value:
             row_position = table.rowCount()
             table.insertRow(row_position)
-            table.setItem(row_position, 0, QTableWidgetItem(str(val[1])))
-            table.setItem(row_position, 1, QTableWidgetItem(str(val[2])))
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
 
         s = payroll_signatory.select()
         s_value = conn.execute(s)
@@ -184,8 +239,31 @@ class MainApp(QMainWindow, ui):
         for val in s_value:
             row_position = table.rowCount()
             table.insertRow(row_position)
-            table.setItem(row_position, 0, QTableWidgetItem(str(val[1])))
-            table.setItem(row_position, 1, QTableWidgetItem(str(val[2])))
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+
+
+    def settings_table_widget_edit(self,table):
+        try:
+            r = table.currentRow()
+            id = table.item(r,0).text()
+            username = table.item(r,1).text()
+            password = table.item(r,2).text()
+            previlage = table.item(r,3).text()
+            print('{} - {} - {} - {}'.format(id,username,password,previlage))
+
+            ad = Accounts_Dialogue(self)
+            ad.show()
+            ad.ShowDialogue(id,username,password)
+
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No Rows Selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 
 
 #--------------------------------------------------------------------#
@@ -198,7 +276,7 @@ class MainApp(QMainWindow, ui):
 ###########################################DIALOGS#####################################
 
 
-class Add_Employee_Dialogue(QDialog,ui2):
+class Add_Employee_Dialogue(QDialog,add_employee_ui):
     def __init__(self,parent=None):
         super(Add_Employee_Dialogue,self).__init__(parent)
         self.setupUi(self)
@@ -211,6 +289,19 @@ class Add_Employee_Dialogue(QDialog,ui2):
         pass
 
 #########################################################################################
+
+class Accounts_Dialogue(QDialog,accounts_ui):
+    def __init__(self,parent=None):
+        super(Accounts_Dialogue,self).__init__(parent)
+        self.setupUi(self)
+
+
+    def ShowDialogue(self,id,username,password,dependencies=''):
+        self.username.setText(username)
+        self.password.setText(password)
+
+
+
 
 def main():
     app = QApplication(sys.argv)
