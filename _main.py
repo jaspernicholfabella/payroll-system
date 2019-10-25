@@ -26,6 +26,9 @@ global payroll_ae_title
 global payroll_ae_secret_id
 global payroll_ae_table_widget
 global payroll_employee_dict
+global salary_grade_dict
+
+
 
 main_ui, _ = loadUiType('Payroll_System.ui')
 add_payroll_ui, _ = loadUiType('Add_Payroll.ui')
@@ -156,6 +159,10 @@ class MainApp(QMainWindow, main_ui):
         self.settings_edit_salary_grade.clicked.connect(lambda: self.settings_salary_grade_table_edit(self.settings_table_widget_salary_grade))
         self.settings_add_salary_grade.clicked.connect(lambda: self.settings_salary_grade_table_add(self.settings_table_widget_salary_grade))
         self.settings_delete_salary_grade.clicked.connect(lambda: self.settings_salary_grade_table_delete(self.settings_table_widget_salary_grade))
+
+        self.settings_edit_salary_designation.clicked.connect(lambda: self.settings_salary_designation_table_edit(self.settings_table_widget_salary_designation))
+        self.settings_add_salary_designation.clicked.connect(lambda: self.settings_salary_designation_table_add(self.settings_table_widget_salary_designation))
+        self.settings_delete_salary_designation.clicked.connect(lambda: self.settings_salary_designation_table_delete(self.settings_table_widget_salary_designation))
 
         self.settings_edit_signatory.clicked.connect(lambda: self.settings_signatory_table_edit(self.settings_table_widget_signatory))
 
@@ -446,6 +453,44 @@ class MainApp(QMainWindow, main_ui):
         conn.execute(s)
         self.show_settings()
 
+
+
+
+    def settings_salary_designation_table_edit(self,table):
+        try:
+            r = table.currentRow()
+            id = table.item(r,0).text()
+            designation = table.item(r,1).text()
+            salarygrade = table.item(r,2).text()
+            ad = Designation_Dialogue(self)
+            ad.show()
+            ad.ShowDialogue(id,designation,salarygrade,operationType='edit')
+
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No Rows Selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
+
+    def settings_salary_designation_table_add(self,table):
+        try:
+            ad = Designation_Dialogue(self)
+            ad.show()
+            ad.ShowDialogue(id,'','',operationType='add')
+        except:
+            pass
+
+    def settings_salary_designation_table_delete(self,table):
+        r = table.currentRow()
+        id = table.item(r, 0).text()
+        engine = sqc.Database().engine
+        conn = engine.connect()
+        designation = sqc.Database().payroll_designation
+        s = designation.delete().where(designation.c.designationid == id)
+        conn.execute(s)
+        self.show_settings()
 
 
 
@@ -742,8 +787,6 @@ class Salary_Grade_Dialogue(QDialog,salary_grade_ui):
             msg.exec_()
 
 
-
-
     def show_settings(self):
         global settings_table_widget_salary_grade
         settings_table_widget_salary_grade.setRowCount(0)
@@ -763,8 +806,80 @@ class Salary_Grade_Dialogue(QDialog,salary_grade_ui):
 
 
 
+class Designation_Dialogue(QDialog,designation_ui):
+    edit_id = 0
+    operationType = ''
+    def __init__(self,parent=None):
+        super(Designation_Dialogue,self).__init__(parent)
+        self.setupUi(self)
+        self.Salarygrade_Values()
 
 
+    def Salarygrade_Values(self):
+        global salary_grade_dict
+        salary_grade_dict = {}
+
+        engine = sqc.Database().engine
+        salarygrade = sqc.Database().salarygrade
+        conn = engine.connect()
+        s = salarygrade.select()
+        s_value = conn.execute(s)
+
+        for val in s_value:
+            salary_grade_dict.update({val[1]:val[2]})
+
+        for key,item in salary_grade_dict.items():
+            self.salarygrade_combo.addItem(key)
+
+
+    def ShowDialogue(self,id,designation,salary_grade,operationType = ''):
+
+        index = self.salarygrade_combo.findText(salary_grade)
+        if index >= 0:
+            self.salarygrade_combo.setCurrentIndex(index)
+
+        self.designation.setText(designation)
+        self.edit_id = id
+        self.operationType = operationType
+        self.buttonBox.accepted.connect(self.ok_button)
+
+
+    def ok_button(self):
+        engine = sqc.Database().engine
+        payroll_designation = sqc.Database().payroll_designation
+        conn = engine.connect()
+        if self.operationType == 'edit':
+            s = payroll_designation.update().where(payroll_designation.c.designationid == self.edit_id).\
+                values(designationtitle = self.designation.text(),
+                       salarygrade = self.salarygrade_combo.currentText())
+            conn.execute(s)
+            self.show_settings()
+
+        elif self.operationType == 'add':
+            s = payroll_designation.insert().values(
+                designationtitle=self.designation.text(),
+                salarygrade=self.salarygrade_combo.currentText()
+            )
+            conn.execute(s)
+        self.show_settings()
+
+
+
+    def show_settings(self):
+        global settings_table_widget_salary_designation
+        settings_table_widget_salary_designation.setRowCount(0)
+        engine = sqc.Database().engine
+        designation = sqc.Database().payroll_designation
+        conn = engine.connect()
+        s = designation.select()
+        s_value = conn.execute(s)
+        table = settings_table_widget_salary_designation
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
 
 
 

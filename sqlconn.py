@@ -87,7 +87,9 @@ class Database():
 
 
     payroll_record = Table('payroll_record',meta,
-                           Column('payrollid',INTEGER,primary_key=True),
+                           Column('recordid',INTEGER,primary_key=True),
+                           Column('payrollid', INTEGER),
+                           Column('employee_id', INTEGER),
                            Column('payroll_date',String),
                            Column('name',String),
                            Column('designation',String),
@@ -108,9 +110,8 @@ class Database():
                            Column('soprecco_reg',Float),
                            Column('soprecco_educ',Float),
                            Column('soprecco_share',Float),
-                           Column('amout_due',Float),
-                           Column('record_id',INTEGER),
-                           Column('employee_id',INTEGER))
+                           Column('amout_due',Float))
+
 
     meta.create_all(engine)
 
