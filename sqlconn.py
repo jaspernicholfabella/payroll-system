@@ -1,5 +1,5 @@
 from sqlalchemy import create_engine
-from sqlalchemy import Table, Column,VARCHAR,INTEGER,Float,String, MetaData,ForeignKey,Date,Text
+from sqlalchemy import Table, Column,VARCHAR,INTEGER,Float,String, MetaData,ForeignKey,Date,Text,DECIMAL
 from sqlalchemy.sql import exists
 import os
 class Database():
@@ -57,10 +57,16 @@ class Database():
                     # mysql_key_block_size="1024",
                      )
 
-    payroll_salarygrade = Table('payroll_salarygrade',meta,
+
+    salarygrade = Table('salarygrade',meta,
                         Column('salaryid', INTEGER, primary_key=True),
-                        Column('salarytitle', VARCHAR(50)),
+                        Column('salarytitle', VARCHAR(8)),
                         Column('amount',Float))
+
+    payroll_designation = Table('payroll_designation',meta,
+                        Column('designationid', INTEGER, primary_key=True),
+                        Column('designationtitle', String),
+                        Column('salarygrade',String))
 
     payroll_admin = Table('payroll_admin',meta,
                           Column('userid',INTEGER,primary_key=True),

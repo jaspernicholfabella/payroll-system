@@ -18,16 +18,20 @@ import datetime
 global tabWidget
 global settings_table_widget_accounts
 global settings_table_widget_salary_grade
+global settings_table_widget_salary_designation
 global settings_table_widget_signatory
 global payroll_home_list_dict
 global payroll_home_list_widget
 global payroll_ae_title
 global payroll_ae_secret_id
+global payroll_ae_table_widget
+global payroll_employee_dict
 
 main_ui, _ = loadUiType('Payroll_System.ui')
 add_payroll_ui, _ = loadUiType('Add_Payroll.ui')
 add_employee_ui, _ = loadUiType('Add_Employee.ui')
 accounts_ui, _ = loadUiType('Accounts.ui')
+salary_grade_ui, _ = loadUiType('SalaryGrade.ui')
 designation_ui, _ = loadUiType('Designation.ui')
 signatories_ui, _ = loadUiType('Signatories.ui')
 
@@ -51,6 +55,7 @@ class MainApp(QMainWindow, main_ui):
         # self.payroll_home_title.setText('Payroll Record')
         # self.settings_account_title.setText('Accounts')
         # self.settings_salary_grade_title.setText('Salary Grade')
+        # self.settings_salary_grade_designation.setText('Designation')
         # self.settings_signatory_title.setText('Signatory')
         # self.payslip_title.setText('Employee Payslip Records')
         pass
@@ -61,10 +66,12 @@ class MainApp(QMainWindow, main_ui):
         global tabWidget
         global settings_table_widget_accounts
         global settings_table_widget_salary_grade
+        global settings_table_widget_salary_designation
         global settings_table_widget_signatory
         global payroll_home_list_widget
         global payroll_ae_title
         global payroll_ae_secret_id
+        global payroll_ae_table_widget
         ##main
         tabWidget = self.tabWidget
         self._container.setVisible(False)
@@ -86,8 +93,10 @@ class MainApp(QMainWindow, main_ui):
         ##payroll_ae
         payroll_ae_title = self.payroll_ae_title
         payroll_ae_secret_id = self.payroll_ae_secret_id
+        payroll_ae_table_widget = self.payroll_ae_table_widget
         #payroll_ae_secret_id.setVisible(False)
         self.payroll_ae_table_widget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
+        self.payroll_ae_employee_dict_update()
         ##payslip
         self.payslip_logo_1.setEnabled(False)
         self.payslip_logo_2.setEnabled(False)
@@ -97,18 +106,23 @@ class MainApp(QMainWindow, main_ui):
         self.show_settings()
         self.settings_table_widget_accounts.setEditTriggers(QTableWidget.NoEditTriggers)
         self.settings_table_widget_salary_grade.setEditTriggers(QTableWidget.NoEditTriggers)
+        self.settings_table_widget_salary_designation.setEditTriggers(QTableWidget.NoEditTriggers)
         self.settings_table_widget_signatory.setEditTriggers(QTableWidget.NoEditTriggers)
         self.settings_table_widget_accounts.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
         self.settings_table_widget_salary_grade.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
+        self.settings_table_widget_salary_designation.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
         self.settings_table_widget_signatory.setSelectionBehavior(QtWidgets.QTableView.SelectRows)
         #self.settings_table_widget_accounts.resizeColumnsToContents()
         #self.settings_table_widget_salary_grade.resizeColumnsToContents()
+        # self.settings_table_widget_salary_designation.resizeColumnsToContents()
         self.settings_table_widget_signatory.resizeColumnsToContents()
         self.settings_table_widget_accounts.setColumnHidden(0,True)
         self.settings_table_widget_salary_grade.setColumnHidden(0,True)
+        self.settings_table_widget_salary_designation.setColumnHidden(0, True)
         self.settings_table_widget_signatory.setColumnHidden(0,True)
         settings_table_widget_accounts = self.settings_table_widget_accounts
         settings_table_widget_salary_grade = self.settings_table_widget_salary_grade
+        settings_table_widget_salary_designation = self.settings_table_widget_salary_designation
         settings_table_widget_signatory = self.settings_table_widget_signatory
 
 
@@ -139,6 +153,10 @@ class MainApp(QMainWindow, main_ui):
         self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
         self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
         self.settings_delete_account.clicked.connect(lambda: self.settings_account_table_delete(self.settings_table_widget_accounts))
+        self.settings_edit_salary_grade.clicked.connect(lambda: self.settings_salary_grade_table_edit(self.settings_table_widget_salary_grade))
+        self.settings_add_salary_grade.clicked.connect(lambda: self.settings_salary_grade_table_add(self.settings_table_widget_salary_grade))
+        self.settings_delete_salary_grade.clicked.connect(lambda: self.settings_salary_grade_table_delete(self.settings_table_widget_salary_grade))
+
         self.settings_edit_signatory.clicked.connect(lambda: self.settings_signatory_table_edit(self.settings_table_widget_signatory))
 
 
@@ -219,6 +237,7 @@ class MainApp(QMainWindow, main_ui):
             msg.setWindowTitle("Error")
             msg.exec_()
 
+
     def payroll_home_delete_action(self):
         global payroll_home_list_dict
         global payroll_home_list_widget
@@ -275,16 +294,31 @@ class MainApp(QMainWindow, main_ui):
         dialog.show()
 
 
+    def payroll_ae_employee_dict_update(self):
+        global payroll_employee_dict
+        payroll_employee_dict = {}
+        engine = sqc.Database().engine
+        employee = sqc.Database().employee
+        conn = engine.connect()
+        s = employee.select()
+        s_value = conn.execute(s)
+        for val in s_value:
+            payroll_employee_dict.update({
+                '{}, {} {}'.format(val[1],val[2],val[3]) : val[0]
+            })
+
 ##SETTINGS TAB
 #___________________________________________________________________________________________________#
     def show_settings(self):
         self.settings_table_widget_accounts.setRowCount(0)
         self.settings_table_widget_salary_grade.setRowCount(0)
+        self.settings_table_widget_salary_designation.setRowCount(0)
         self.settings_table_widget_signatory.setRowCount(0)
 
         engine = sqc.Database().engine
         payroll_admin = sqc.Database().payroll_admin
-        payroll_salarygrade = sqc.Database().payroll_salarygrade
+        salarygrade = sqc.Database().salarygrade
+        designation = sqc.Database().payroll_designation
         payroll_signatory = sqc.Database().payroll_signatory
 
         conn = engine.connect()
@@ -299,7 +333,7 @@ class MainApp(QMainWindow, main_ui):
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
             table.setItem(row_position, 3, QTableWidgetItem(str(val[3])))
 
-        s = payroll_salarygrade.select()
+        s = salarygrade.select()
         s_value = conn.execute(s)
         table=self.settings_table_widget_salary_grade
         for val in s_value:
@@ -308,6 +342,17 @@ class MainApp(QMainWindow, main_ui):
             table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
             table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+
+        s = designation.select()
+        s_value = conn.execute(s)
+        table=self.settings_table_widget_salary_designation
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+
 
         s = payroll_signatory.select()
         s_value = conn.execute(s)
@@ -356,6 +401,56 @@ class MainApp(QMainWindow, main_ui):
         s = payroll_admin.delete().where(payroll_admin.c.userid == id)
         conn.execute(s)
         self.show_settings()
+
+
+
+
+
+    def settings_salary_grade_table_edit(self,table):
+        try:
+            r = table.currentRow()
+            id = table.item(r,0).text()
+            tempsg = table.item(r,1).text()
+            amount = table.item(r,2).text()
+
+            salarygrade = str(tempsg).split('-')[1].strip()
+            step = str(tempsg).split('-')[2].strip()
+
+            ad = Salary_Grade_Dialogue(self)
+            ad.show()
+            ad.ShowDialogue(id,salarygrade,step,amount,operationType='edit')
+
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No Rows Selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
+
+    def settings_salary_grade_table_add(self,table):
+        try:
+            ad = Salary_Grade_Dialogue(self)
+            ad.show()
+            ad.ShowDialogue(id,'','','',operationType='add')
+        except:
+            pass
+
+    def settings_salary_grade_table_delete(self,table):
+        r = table.currentRow()
+        id = table.item(r, 0).text()
+        engine = sqc.Database().engine
+        conn = engine.connect()
+        salarygrade = sqc.Database().salarygrade
+        s = salarygrade.delete().where(salarygrade.c.salaryid == id)
+        conn.execute(s)
+        self.show_settings()
+
+
+
+
+
+
 
     def settings_signatory_table_edit(self,table):
         try:
@@ -512,6 +607,7 @@ class Add_Payroll_Dialogue(QDialog,add_payroll_ui):
 ##ADD_EMPLOYEE
 #________________________________________________________________________________________________________________________________#
 class Add_Employee_Dialogue(QDialog,add_employee_ui):
+
     def __init__(self,parent=None):
         super(Add_Employee_Dialogue,self).__init__(parent)
         self.setupUi(self)
@@ -519,9 +615,24 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
         self.Handle_Button_Changes()
 
     def Handle_UI_Changes(self):
-        pass
+        global payroll_employee_dict
+        x = 0
+        for key,value in payroll_employee_dict.items():
+            self._add_employee_name_combo.addItem(key)
+            x+=1
+
     def Handle_Button_Changes(self):
         pass
+
+
+
+
+
+
+
+
+
+
 #______________________________________________________________________________________________________#
 
 
@@ -583,6 +694,82 @@ class Accounts_Dialogue(QDialog,accounts_ui):
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
             table.setItem(row_position, 3, QTableWidgetItem(str(val[3])))
 
+
+class Salary_Grade_Dialogue(QDialog,salary_grade_ui):
+    edit_id = 0
+    operationType = ''
+    def __init__(self,parent=None):
+        super(Salary_Grade_Dialogue,self).__init__(parent)
+        self.setupUi(self)
+
+    def ShowDialogue(self,id,salarygrade,step,salary,operationType = ''):
+        self.salarygrade.setText(salarygrade)
+        self.step.setText(step)
+        self.salary.setText(salary)
+        self.edit_id = id
+        self.operationType = operationType
+        self.buttonBox.accepted.connect(self.ok_button)
+
+
+    def ok_button(self):
+        try:
+            sg = int(self.salarygrade.text())
+            step = int(self.step.text())
+            engine = sqc.Database().engine
+            salarygrade = sqc.Database().salarygrade
+            conn = engine.connect()
+            salarytitle = 'sg-{}-{}'.format(sg,step)
+            if self.operationType == 'edit':
+                s = salarygrade.update().where(salarygrade.c.salaryid == self.edit_id).\
+                    values(salarytitle = salarytitle,
+                           amount = float(self.salary.text()))
+                conn.execute(s)
+                self.show_settings()
+
+            elif self.operationType == 'add':
+                s = salarygrade.insert().values(
+                    salarytitle = salarytitle,
+                    amount = float(self.salary.text())
+                )
+                conn.execute(s)
+            self.show_settings()
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('Data Should be numeric.')
+            msg.setWindowTitle("Error")
+            msg.exec_()
+
+
+
+
+    def show_settings(self):
+        global settings_table_widget_salary_grade
+        settings_table_widget_salary_grade.setRowCount(0)
+        engine = sqc.Database().engine
+        salarygrade = sqc.Database().salarygrade
+        conn = engine.connect()
+        s = salarygrade.select()
+        s_value = conn.execute(s)
+        table = settings_table_widget_salary_grade
+        for val in s_value:
+            row_position = table.rowCount()
+            table.insertRow(row_position)
+            table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
+            table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
+            table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+
+
+
+
+
+
+
+
+
+
+
 class Signatories_Dialogue(QDialog,signatories_ui):
     edit_id = 0
     def __init__(self,parent=None):
@@ -620,6 +807,10 @@ class Signatories_Dialogue(QDialog,signatories_ui):
             table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
             table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+
+
+
+
 
 def convertMonth(month):
     tempdict = {

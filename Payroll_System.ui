@@ -100,7 +100,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>6</number>
     </property>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -1952,8 +1952,8 @@
      <widget class="QTableWidget" name="settings_table_widget_accounts">
       <property name="geometry">
        <rect>
-        <x>80</x>
-        <y>80</y>
+        <x>50</x>
+        <y>70</y>
         <width>301</width>
         <height>192</height>
        </rect>
@@ -2000,8 +2000,8 @@
      <widget class="QLabel" name="settings_account_title">
       <property name="geometry">
        <rect>
-        <x>50</x>
-        <y>40</y>
+        <x>20</x>
+        <y>30</y>
         <width>301</width>
         <height>31</height>
        </rect>
@@ -2019,8 +2019,8 @@
      <widget class="QPushButton" name="settings_add_account">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>80</y>
+        <x>10</x>
+        <y>70</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -2048,8 +2048,8 @@
      <widget class="QPushButton" name="settings_delete_account">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>160</y>
+        <x>10</x>
+        <y>150</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -2077,8 +2077,8 @@
      <widget class="QPushButton" name="settings_edit_account">
       <property name="geometry">
        <rect>
-        <x>40</x>
-        <y>120</y>
+        <x>10</x>
+        <y>110</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -2119,9 +2119,9 @@
      <widget class="QTableWidget" name="settings_table_widget_signatory">
       <property name="geometry">
        <rect>
-        <x>220</x>
-        <y>330</y>
-        <width>361</width>
+        <x>50</x>
+        <y>340</y>
+        <width>351</width>
         <height>191</height>
        </rect>
       </property>
@@ -2159,9 +2159,9 @@
      <widget class="QLabel" name="settings_signatory_title">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>290</y>
-        <width>301</width>
+        <x>20</x>
+        <y>300</y>
+        <width>291</width>
         <height>31</height>
        </rect>
       </property>
@@ -2178,8 +2178,8 @@
      <widget class="QTableWidget" name="settings_table_widget_salary_grade">
       <property name="geometry">
        <rect>
-        <x>460</x>
-        <y>80</y>
+        <x>470</x>
+        <y>70</y>
         <width>221</width>
         <height>192</height>
        </rect>
@@ -2191,7 +2191,7 @@
       </column>
       <column>
        <property name="text">
-        <string>Designation </string>
+        <string>Salary Grade</string>
        </property>
        <property name="font">
         <font>
@@ -2215,8 +2215,8 @@
      <widget class="QPushButton" name="settings_delete_salary_grade">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>160</y>
+        <x>430</x>
+        <y>150</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -2241,11 +2241,11 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QLabel" name="settings_salary_grade_title">
+     <widget class="QLabel" name="settings_salary_grade_designation">
       <property name="geometry">
        <rect>
-        <x>430</x>
-        <y>40</y>
+        <x>440</x>
+        <y>30</y>
         <width>221</width>
         <height>31</height>
        </rect>
@@ -2263,8 +2263,8 @@
      <widget class="QPushButton" name="settings_add_salary_grade">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>80</y>
+        <x>430</x>
+        <y>70</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -2289,11 +2289,11 @@
        <bool>true</bool>
       </property>
      </widget>
-     <widget class="QPushButton" name="settings_edit_slary_grade">
+     <widget class="QPushButton" name="settings_edit_salary_grade">
       <property name="geometry">
        <rect>
-        <x>420</x>
-        <y>120</y>
+        <x>430</x>
+        <y>110</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -2321,8 +2321,8 @@
      <widget class="QPushButton" name="settings_edit_signatory">
       <property name="geometry">
        <rect>
-        <x>180</x>
-        <y>330</y>
+        <x>10</x>
+        <y>340</y>
         <width>41</width>
         <height>41</height>
        </rect>
@@ -2345,6 +2345,149 @@
       </property>
       <property name="flat">
        <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QTableWidget" name="settings_table_widget_salary_designation">
+      <property name="geometry">
+       <rect>
+        <x>470</x>
+        <y>340</y>
+        <width>221</width>
+        <height>192</height>
+       </rect>
+      </property>
+      <column>
+       <property name="text">
+        <string>id</string>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Designation</string>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+      <column>
+       <property name="text">
+        <string>Salary Grade</string>
+       </property>
+       <property name="font">
+        <font>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+      </column>
+     </widget>
+     <widget class="QPushButton" name="settings_edit_salary_designation">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>380</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;edit salary grade&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="settings_delete_salary_designation">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>420</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;delete salary grade&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/trash-can.png</normaloff>:/icons/trash-can.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="settings_add_salary_designation">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>340</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;add salary grade&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/add-database.png</normaloff>:/icons/add-database.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>30</width>
+        <height>30</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="settings_salary_grade_title">
+      <property name="geometry">
+       <rect>
+        <x>440</x>
+        <y>300</y>
+        <width>221</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI</family>
+        <pointsize>16</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
       </property>
      </widget>
     </widget>
