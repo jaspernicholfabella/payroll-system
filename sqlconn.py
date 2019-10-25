@@ -76,7 +76,8 @@ class Database():
     payroll_bundle = Table('payroll_bundle',meta,
                            Column('payrollid',INTEGER,primary_key=True),
                            Column('payroll_date_from',String),
-                           Column('payroll_date_to',String))
+                           Column('payroll_date_to',String),
+                           Column('payroll_name',String),)
 
 
     payroll_record = Table('payroll_record',meta,

@@ -562,12 +562,12 @@
       </property>
       <property name="icon">
        <iconset resource="icons.qrc">
-        <normaloff>:/icons/moleskine.png</normaloff>:/icons/moleskine.png</iconset>
+        <normaloff>:/icons/search-folder.png</normaloff>:/icons/search-folder.png</iconset>
       </property>
       <property name="iconSize">
        <size>
-        <width>45</width>
-        <height>45</height>
+        <width>40</width>
+        <height>40</height>
        </size>
       </property>
       <property name="flat">
@@ -663,16 +663,6 @@
         <height>451</height>
        </rect>
       </property>
-      <item>
-       <property name="text">
-        <string>✎PAYROLL FOR THE PERIOD SEPTEMBER 16-30, 2019</string>
-       </property>
-      </item>
-      <item>
-       <property name="text">
-        <string>✎PAYROLL FOR THE PERIOD SEPTEMBER 1-15, 2019</string>
-       </property>
-      </item>
      </widget>
      <widget class="QLineEdit" name="payroll_home_search">
       <property name="geometry">
@@ -1174,39 +1164,10 @@
      <attribute name="title">
       <string>payroll_ae</string>
      </attribute>
-     <widget class="QPushButton" name="payroll_ae_save">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>10</y>
-        <width>41</width>
-        <height>41</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;save to database&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-      <property name="text">
-       <string/>
-      </property>
-      <property name="icon">
-       <iconset resource="icons.qrc">
-        <normaloff>:/icons/hdd.png</normaloff>:/icons/hdd.png</iconset>
-      </property>
-      <property name="iconSize">
-       <size>
-        <width>32</width>
-        <height>32</height>
-       </size>
-      </property>
-      <property name="flat">
-       <bool>true</bool>
-      </property>
-     </widget>
      <widget class="QPushButton" name="payroll_ae_quit">
       <property name="geometry">
        <rect>
-        <x>490</x>
+        <x>480</x>
         <y>10</y>
         <width>41</width>
         <height>41</height>
@@ -1235,7 +1196,7 @@
      <widget class="QPushButton" name="payroll_ae_excel">
       <property name="geometry">
        <rect>
-        <x>410</x>
+        <x>400</x>
         <y>10</y>
         <width>41</width>
         <height>41</height>
@@ -1293,7 +1254,7 @@
      <widget class="QPushButton" name="payroll_ae_delete_person">
       <property name="geometry">
        <rect>
-        <x>50</x>
+        <x>90</x>
         <y>50</y>
         <width>41</width>
         <height>41</height>
@@ -1322,7 +1283,7 @@
      <widget class="QPushButton" name="payroll_ae_print">
       <property name="geometry">
        <rect>
-        <x>450</x>
+        <x>440</x>
         <y>10</y>
         <width>41</width>
         <height>41</height>
@@ -1610,12 +1571,12 @@
        </property>
       </column>
      </widget>
-     <widget class="QLabel" name="label_6">
+     <widget class="QLabel" name="payroll_ae_title">
       <property name="geometry">
        <rect>
         <x>20</x>
         <y>20</y>
-        <width>341</width>
+        <width>391</width>
         <height>21</height>
        </rect>
       </property>
@@ -1626,6 +1587,51 @@
       </property>
       <property name="text">
        <string> Payroll for  SEPTEMBER 18-30 2019</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="payroll_ae_secret_id">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>10</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="payroll_ae_edit_person">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>50</y>
+        <width>41</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="toolTip">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;delete record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="icon">
+       <iconset resource="icons.qrc">
+        <normaloff>:/icons/edit.png</normaloff>:/icons/edit.png</iconset>
+      </property>
+      <property name="iconSize">
+       <size>
+        <width>25</width>
+        <height>25</height>
+       </size>
+      </property>
+      <property name="flat">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -2398,7 +2404,7 @@
      </property>
      <property name="icon">
       <iconset resource="icons.qrc">
-       <normaloff>:/icons/user-male.png</normaloff>:/icons/user-male.png</iconset>
+       <normaloff>:/icons/moleskine.png</normaloff>:/icons/moleskine.png</iconset>
      </property>
      <property name="iconSize">
       <size>
