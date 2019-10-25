@@ -27,7 +27,7 @@ global payroll_ae_secret_id
 global payroll_ae_table_widget
 global payroll_employee_dict
 global salary_grade_dict
-
+global designation_dict
 
 
 main_ui, _ = loadUiType('Payroll_System.ui')
@@ -303,16 +303,38 @@ class MainApp(QMainWindow, main_ui):
 
     def payroll_ae_employee_dict_update(self):
         global payroll_employee_dict
+        global salary_grade_dict
+        global designation_dict
         payroll_employee_dict = {}
+        salary_grade_dict = {}
+        designation_dict = {}
         engine = sqc.Database().engine
         employee = sqc.Database().employee
+        salarygrade = sqc.Database().salarygrade
+        designation = sqc.Database().payroll_designation
         conn = engine.connect()
         s = employee.select()
         s_value = conn.execute(s)
         for val in s_value:
-            payroll_employee_dict.update({
-                '{}, {} {}'.format(val[1],val[2],val[3]) : val[0]
+            payroll_employee_dict.update({'{}, {} {}'.format(val[1],val[2],val[3]) : val[0]})
+
+        s = salarygrade.select()
+        s_value = conn.execute(s)
+        for val in s_value:
+            salary_grade_dict.update({
+                val[1]:val[2]
             })
+
+        s = designation.select()
+        s_value = conn.execute(s)
+        for val in s_value:
+            designation_dict.update({
+                val[1]:val[2]
+            })
+
+        payroll_employee_dict = {k: payroll_employee_dict[k] for k in sorted(payroll_employee_dict)}
+        salary_grade_dict = {k: salary_grade_dict[k] for k in sorted(salary_grade_dict)}
+        designation_dict = {k: designation_dict[k] for k in sorted(designation_dict)}
 
 ##SETTINGS TAB
 #___________________________________________________________________________________________________#
@@ -659,17 +681,32 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
         self.Handle_UI_Changes()
         self.Handle_Button_Changes()
 
+
     def Handle_UI_Changes(self):
         global payroll_employee_dict
-        x = 0
+        global designation_dict
+        self._add_employee_name_combo.setCurrentIndex(0)
+        self._add_designation_combo.setCurrentIndex(0)
         for key,value in payroll_employee_dict.items():
             self._add_employee_name_combo.addItem(key)
-            x+=1
+
+        for key,value in designation_dict.items():
+            self._add_designation_combo.addItem(key)
+
 
     def Handle_Button_Changes(self):
-        pass
+        self._add_designation_button.clicked.connect(self.add_designation)
 
 
+    def add_designation(self):
+        try:
+            pass
+            # ad = Designation_Dialogue(self)
+            # ad.show()
+            # ad.designation_refresh(self._add_designation_combo)
+
+        except:
+            pass
 
 
 
@@ -864,7 +901,6 @@ class Designation_Dialogue(QDialog,designation_ui):
         self.show_settings()
 
 
-
     def show_settings(self):
         global settings_table_widget_salary_designation
         settings_table_widget_salary_designation.setRowCount(0)
@@ -880,6 +916,20 @@ class Designation_Dialogue(QDialog,designation_ui):
             table.setItem(row_position, 0, QTableWidgetItem(str(val[0])))
             table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
+
+    def designation_refresh(self,designation_combobox):
+        engine = sqc.Database().engine
+        payroll_designation = sqc.Database().payroll_designation
+        conn = engine.connect()
+        s = payroll_designation.insert().values(
+            designationtitle=self.designation.text(),
+            salarygrade=self.salarygrade_combo.currentText()
+        )
+        conn.execute(s)
+
+
+
+
 
 
 

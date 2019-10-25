@@ -40,7 +40,7 @@
     <rect>
      <x>10</x>
      <y>10</y>
-     <width>301</width>
+     <width>361</width>
      <height>191</height>
     </rect>
    </property>
@@ -52,9 +52,15 @@
      <rect>
       <x>140</x>
       <y>30</y>
-      <width>141</width>
+      <width>201</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+      <pointsize>9</pointsize>
+     </font>
     </property>
    </widget>
    <widget class="QLabel" name="label">
@@ -98,9 +104,9 @@
    <widget class="QLineEdit" name="_add_monthly_rate">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>260</x>
       <y>90</y>
-      <width>71</width>
+      <width>81</width>
       <height>22</height>
      </rect>
     </property>
@@ -119,9 +125,15 @@
      <rect>
       <x>140</x>
       <y>60</y>
-      <width>111</width>
+      <width>181</width>
       <height>22</height>
      </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Segoe UI</family>
+      <pointsize>9</pointsize>
+     </font>
     </property>
    </widget>
    <widget class="QLabel" name="label_3">
@@ -146,9 +158,9 @@
    <widget class="QLineEdit" name="_add_ammount_accrued">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>260</x>
       <y>120</y>
-      <width>71</width>
+      <width>81</width>
       <height>22</height>
      </rect>
     </property>
@@ -165,9 +177,9 @@
    <widget class="QLineEdit" name="_add_pera">
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>260</x>
       <y>150</y>
-      <width>71</width>
+      <width>81</width>
       <height>22</height>
      </rect>
     </property>
@@ -222,7 +234,7 @@
    <widget class="QPushButton" name="_add_designation_button">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>320</x>
       <y>60</y>
       <width>21</width>
       <height>21</height>
@@ -859,7 +871,7 @@
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>340</x>
+     <x>380</x>
      <y>20</y>
      <width>91</width>
      <height>16</height>
@@ -878,7 +890,7 @@
   <widget class="QLineEdit" name="lineEdit_32">
    <property name="geometry">
     <rect>
-     <x>430</x>
+     <x>470</x>
      <y>20</y>
      <width>101</width>
      <height>22</height>
