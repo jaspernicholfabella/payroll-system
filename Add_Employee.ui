@@ -38,7 +38,7 @@
   <widget class="QGroupBox" name="groupBox">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>220</x>
      <y>10</y>
      <width>361</width>
      <height>191</height>
@@ -184,13 +184,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="labela">
@@ -299,7 +302,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -309,6 +312,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_5">
@@ -340,13 +346,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_10">
@@ -397,7 +406,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -407,6 +416,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="_add_pagibig_govt">
@@ -419,7 +431,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -429,6 +441,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_12">
@@ -460,13 +475,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="_add_pagibig_calamity">
@@ -479,13 +497,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_13">
@@ -536,13 +557,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_15">
@@ -574,7 +598,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -584,6 +608,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_16">
@@ -615,7 +642,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -625,6 +652,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_17">
@@ -675,13 +705,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="_add_gempco_reg_loan">
@@ -694,13 +727,16 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="_add_gempco_educ_loan">
@@ -713,7 +749,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -723,6 +759,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_19">
@@ -773,7 +812,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -783,6 +822,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_33">
@@ -814,7 +856,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -824,6 +866,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="_add_soprecco_share">
@@ -836,7 +881,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>0</string>
+     <string/>
     </property>
     <property name="frame">
      <bool>true</bool>
@@ -846,6 +891,9 @@
     </property>
     <property name="readOnly">
      <bool>false</bool>
+    </property>
+    <property name="placeholderText">
+     <string>0</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_34">
@@ -868,44 +916,76 @@
     </property>
    </widget>
   </widget>
+  <widget class="QPushButton" name="_add_employee_design">
+   <property name="geometry">
+    <rect>
+     <x>70</x>
+     <y>40</y>
+     <width>81</width>
+     <height>81</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/SORSOGON.png</normaloff>
+     <disabledoff>:/icons/SORSOGON.png</disabledoff>:/icons/SORSOGON.png</iconset>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>90</width>
+     <height>90</height>
+    </size>
+   </property>
+   <property name="flat">
+    <bool>true</bool>
+   </property>
+  </widget>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
     <rect>
-     <x>380</x>
-     <y>20</y>
-     <width>91</width>
-     <height>16</height>
+     <x>20</x>
+     <y>10</y>
+     <width>191</width>
+     <height>31</height>
     </rect>
    </property>
    <property name="font">
     <font>
-     <weight>75</weight>
-     <bold>true</bold>
+     <pointsize>10</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>AMOUNT DUE</string>
+    <string>Add Employee to Payroll</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_32">
+  <widget class="QPushButton" name="_add_employee_design2">
    <property name="geometry">
     <rect>
-     <x>470</x>
-     <y>20</y>
-     <width>101</width>
-     <height>22</height>
+     <x>20</x>
+     <y>100</y>
+     <width>181</width>
+     <height>71</height>
     </rect>
    </property>
    <property name="text">
-    <string>0</string>
+    <string/>
    </property>
-   <property name="frame">
-    <bool>false</bool>
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/ph_design.png</normaloff>
+     <disabledoff>:/icons/ph_design.png</disabledoff>
+     <disabledon>:/icons/ph_design.png</disabledon>:/icons/ph_design.png</iconset>
    </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
+   <property name="iconSize">
+    <size>
+     <width>150</width>
+     <height>200</height>
+    </size>
    </property>
-   <property name="readOnly">
+   <property name="flat">
     <bool>true</bool>
    </property>
   </widget>

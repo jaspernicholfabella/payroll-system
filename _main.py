@@ -52,15 +52,15 @@ class MainApp(QMainWindow, main_ui):
 
 
     def Default_Text(self):
-        # self.login_title.setText('PHRMO Payroll Information System')
-        # self.home_title.setText('PHRMO Payroll Information System')
-        # self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
-        # self.payroll_home_title.setText('Payroll Record')
-        # self.settings_account_title.setText('Accounts')
-        # self.settings_salary_grade_title.setText('Salary Grade')
-        # self.settings_salary_grade_designation.setText('Designation')
-        # self.settings_signatory_title.setText('Signatory')
-        # self.payslip_title.setText('Employee Payslip Records')
+        self.login_title.setText('PHRMO Payroll Information System')
+        self.home_title.setText('PHRMO Payroll Information System')
+        self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
+        self.payroll_home_title.setText('Payroll Record')
+        self.settings_account_title.setText('Accounts')
+        self.settings_salary_grade_title.setText('Designation')
+        self.settings_salary_grade_designation.setText('Salary Grade')
+        self.settings_signatory_title.setText('Signatory')
+        self.payslip_title.setText('Employee Payslip Records')
         pass
 
 
@@ -422,15 +422,17 @@ class MainApp(QMainWindow, main_ui):
             pass
 
     def settings_account_table_delete(self,table):
-        r = table.currentRow()
-        id = table.item(r, 0).text()
-        engine = sqc.Database().engine
-        conn = engine.connect()
-        payroll_admin = sqc.Database().payroll_admin
-        s = payroll_admin.delete().where(payroll_admin.c.userid == id)
-        conn.execute(s)
-        self.show_settings()
-
+        try:
+            r = table.currentRow()
+            id = table.item(r, 0).text()
+            engine = sqc.Database().engine
+            conn = engine.connect()
+            payroll_admin = sqc.Database().payroll_admin
+            s = payroll_admin.delete().where(payroll_admin.c.userid == id)
+            conn.execute(s)
+            self.show_settings()
+        except:
+            pass
 
 
 
@@ -466,14 +468,17 @@ class MainApp(QMainWindow, main_ui):
             pass
 
     def settings_salary_grade_table_delete(self,table):
-        r = table.currentRow()
-        id = table.item(r, 0).text()
-        engine = sqc.Database().engine
-        conn = engine.connect()
-        salarygrade = sqc.Database().salarygrade
-        s = salarygrade.delete().where(salarygrade.c.salaryid == id)
-        conn.execute(s)
-        self.show_settings()
+        try:
+            r = table.currentRow()
+            id = table.item(r, 0).text()
+            engine = sqc.Database().engine
+            conn = engine.connect()
+            salarygrade = sqc.Database().salarygrade
+            s = salarygrade.delete().where(salarygrade.c.salaryid == id)
+            conn.execute(s)
+            self.show_settings()
+        except:
+            pass
 
 
 
@@ -505,19 +510,17 @@ class MainApp(QMainWindow, main_ui):
             pass
 
     def settings_salary_designation_table_delete(self,table):
-        r = table.currentRow()
-        id = table.item(r, 0).text()
-        engine = sqc.Database().engine
-        conn = engine.connect()
-        designation = sqc.Database().payroll_designation
-        s = designation.delete().where(designation.c.designationid == id)
-        conn.execute(s)
-        self.show_settings()
-
-
-
-
-
+        try:
+            r = table.currentRow()
+            id = table.item(r, 0).text()
+            engine = sqc.Database().engine
+            conn = engine.connect()
+            designation = sqc.Database().payroll_designation
+            s = designation.delete().where(designation.c.designationid == id)
+            conn.execute(s)
+            self.show_settings()
+        except:
+            pass
 
     def settings_signatory_table_edit(self,table):
         try:
@@ -685,39 +688,69 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
     def Handle_UI_Changes(self):
         global payroll_employee_dict
         global designation_dict
-        self._add_employee_name_combo.setCurrentIndex(0)
-        self._add_designation_combo.setCurrentIndex(0)
+        global salary_grade_dict
+        self._add_employee_name_combo.clear()
+        self._add_designation_combo.clear()
+
         for key,value in payroll_employee_dict.items():
             self._add_employee_name_combo.addItem(key)
-
         for key,value in designation_dict.items():
             self._add_designation_combo.addItem(key)
+
+        combo_current_value = designation_dict[self._add_designation_combo.currentText()]
+        monthly_rate = salary_grade_dict[combo_current_value]
+        self._add_monthly_rate.setText(str(monthly_rate))
+        accrued_rate = monthly_rate/2
+        self._add_ammount_accrued.setText(str(accrued_rate))
+
+        self.designation_refresh()
 
 
     def Handle_Button_Changes(self):
         self._add_designation_button.clicked.connect(self.add_designation)
+        self._add_designation_combo.currentIndexChanged.connect(self.monthly_rate_show)
 
+
+    def monthly_rate_show(self):
+        global salary_grade_dict
+        global designation_dict
+        try:
+            combo_current_value = designation_dict[self._add_designation_combo.currentText()]
+            monthly_rate = salary_grade_dict[combo_current_value]
+            self._add_monthly_rate.setText(str(monthly_rate))
+            accrued_rate = monthly_rate/2
+            self._add_ammount_accrued.setText(str(accrued_rate))
+        except:
+            pass
+
+    def designation_refresh(self):
+        global designation_dict
+        designation_dict = {}
+        engine = sqc.Database().engine
+        designation = sqc.Database().payroll_designation
+        conn = engine.connect()
+        s = designation.select()
+        s_value = conn.execute(s)
+        for val in s_value:
+            designation_dict.update({
+                val[1]: val[2]})
+        designation_dict = {k: designation_dict[k] for k in sorted(designation_dict)}
+        self._add_designation_combo.clear()
+        for key, value in designation_dict.items():
+            self._add_designation_combo.addItem(key)
 
     def add_designation(self):
         try:
-            pass
-            # ad = Designation_Dialogue(self)
-            # ad.show()
-            # ad.designation_refresh(self._add_designation_combo)
-
+            self._add_designation_combo.setCurrentIndex(0)
+            ad = Designation_Dialogue(self)
+            ad.show()
+            ad.designation_refresh(self._add_designation_combo, operationType='add2')
         except:
             pass
 
 
 
-
-
-
-
-
 #______________________________________________________________________________________________________#
-
-
 
 
 
@@ -846,6 +879,7 @@ class Salary_Grade_Dialogue(QDialog,salary_grade_ui):
 class Designation_Dialogue(QDialog,designation_ui):
     edit_id = 0
     operationType = ''
+    designation_combobox = object()
     def __init__(self,parent=None):
         super(Designation_Dialogue,self).__init__(parent)
         self.setupUi(self)
@@ -854,8 +888,8 @@ class Designation_Dialogue(QDialog,designation_ui):
 
     def Salarygrade_Values(self):
         global salary_grade_dict
-        salary_grade_dict = {}
 
+        salary_grade_dict = {}
         engine = sqc.Database().engine
         salarygrade = sqc.Database().salarygrade
         conn = engine.connect()
@@ -869,8 +903,8 @@ class Designation_Dialogue(QDialog,designation_ui):
             self.salarygrade_combo.addItem(key)
 
 
-    def ShowDialogue(self,id,designation,salary_grade,operationType = ''):
 
+    def ShowDialogue(self,id,designation,salary_grade,operationType = ''):
         index = self.salarygrade_combo.findText(salary_grade)
         if index >= 0:
             self.salarygrade_combo.setCurrentIndex(index)
@@ -885,6 +919,7 @@ class Designation_Dialogue(QDialog,designation_ui):
         engine = sqc.Database().engine
         payroll_designation = sqc.Database().payroll_designation
         conn = engine.connect()
+
         if self.operationType == 'edit':
             s = payroll_designation.update().where(payroll_designation.c.designationid == self.edit_id).\
                 values(designationtitle = self.designation.text(),
@@ -898,8 +933,14 @@ class Designation_Dialogue(QDialog,designation_ui):
                 salarygrade=self.salarygrade_combo.currentText()
             )
             conn.execute(s)
-        self.show_settings()
-
+            self.show_settings()
+        elif self.operationType == 'add2':
+            s = payroll_designation.insert().values(
+                designationtitle=self.designation.text(),
+                salarygrade=self.salarygrade_combo.currentText()
+            )
+            conn.execute(s)
+            self.designation_refresh_combobox()
 
     def show_settings(self):
         global settings_table_widget_salary_designation
@@ -917,18 +958,28 @@ class Designation_Dialogue(QDialog,designation_ui):
             table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
 
-    def designation_refresh(self,designation_combobox):
+    def designation_refresh(self,designation_combobox,operationType=''):
+        self.designation_combobox = designation_combobox
+        self.operationType = operationType
+
+        self.buttonBox.accepted.connect(self.ok_button)
+
+
+    def designation_refresh_combobox(self):
+        global designation_dict
+        designation_dict = {}
         engine = sqc.Database().engine
-        payroll_designation = sqc.Database().payroll_designation
+        designation = sqc.Database().payroll_designation
         conn = engine.connect()
-        s = payroll_designation.insert().values(
-            designationtitle=self.designation.text(),
-            salarygrade=self.salarygrade_combo.currentText()
-        )
-        conn.execute(s)
-
-
-
+        s = designation.select()
+        s_value = conn.execute(s)
+        for val in s_value:
+            designation_dict.update({
+                val[1]:val[2]})
+        designation_dict = {k: designation_dict[k] for k in sorted(designation_dict)}
+        self.designation_combobox.clear()
+        for key,value in designation_dict.items():
+            self.designation_combobox.addItem(key)
 
 
 

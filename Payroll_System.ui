@@ -100,7 +100,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>4</number>
     </property>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -1318,6 +1318,11 @@
         <height>481</height>
        </rect>
       </property>
+      <column>
+       <property name="text">
+        <string>record_id</string>
+       </property>
+      </column>
       <column>
        <property name="text">
         <string>payroll_id</string>
