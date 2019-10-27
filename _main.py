@@ -155,6 +155,7 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_home_delete.clicked.connect(self.payroll_home_delete_action)
         self.payroll_home_edit.clicked.connect(self.payroll_home_edit_action)
         self.payroll_home_excel.clicked.connect(self.payroll_home_excel_action)
+        self.payroll_home_print.clicked.connect(self.payroll_home_print_action)
         ##payroll_view
         self.payroll_view_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
         ##payroll_ae
@@ -163,6 +164,7 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_ae_delete_person.clicked.connect(self.payroll_ae_delete_person_action)
         self.payroll_ae_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
         self.payroll_ae_excel.clicked.connect(self.payroll_ae_create_excel)
+        self.payroll_ae_print.clicked.connect(self.payroll_ae_print_excel)
         ##settings
         self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
         self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
@@ -262,6 +264,20 @@ class MainApp(QMainWindow, main_ui):
         try:
             payrollid = payroll_home_list_dict[payroll_home_list_widget.currentItem().text()]
             xc.open_excel(payrollid)
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No Data Selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
+
+    def payroll_home_print_action(self):
+        global payroll_home_list_widget
+        global payroll_home_list_dict
+        try:
+            payrollid = payroll_home_list_dict[payroll_home_list_widget.currentItem().text()]
+            xc.print_excel(payrollid)
         except:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -394,6 +410,9 @@ class MainApp(QMainWindow, main_ui):
         payroll_id = int(self.payroll_ae_secret_id.text())
         xc.open_excel(payroll_id)
 
+    def payroll_ae_print_excel(self):
+        payroll_id = int(self.payroll_ae_secret_id.text())
+        xc.print_excel(payroll_id)
 
 
 
