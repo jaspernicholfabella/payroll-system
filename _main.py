@@ -851,8 +851,8 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
         if index >= 0:
             self._add_designation_combo.setCurrentIndex(index)
         #Deductions
-        self._add_monthly_rate.setText(payroll_record_list[5])
-        self._add_amount_accrued.setText(payroll_record_list[6])
+        #self._add_monthly_rate.setText(payroll_record_list[5])
+        #self._add_amount_accrued.setText(payroll_record_list[6])
         self._add_pera.setText(payroll_record_list[7])
         self._add_tax.setText(payroll_record_list[9])
         self._add_gsis_educ.setText(payroll_record_list[10])
