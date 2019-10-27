@@ -155,7 +155,7 @@
      <string>Monthly Rate of Pay:</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="_add_ammount_accrued">
+   <widget class="QLineEdit" name="_add_amount_accrued">
     <property name="geometry">
      <rect>
       <x>260</x>

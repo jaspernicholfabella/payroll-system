@@ -138,3 +138,4 @@ class Database():
             print('{} : {}'.format(key,item))
             ins = payroll_signatory.insert().values(name = key,designation = item)
             result = conn.execute(ins)
+

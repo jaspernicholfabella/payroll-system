@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>386</width>
+    <width>362</width>
     <height>287</height>
    </rect>
   </property>
@@ -82,7 +82,7 @@
     <rect>
      <x>10</x>
      <y>220</y>
-     <width>291</width>
+     <width>321</width>
      <height>32</height>
     </rect>
    </property>
@@ -465,7 +465,7 @@
   <widget class="QComboBox" name="from_year">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>250</x>
      <y>100</y>
      <width>81</width>
      <height>22</height>
@@ -744,7 +744,7 @@
   <widget class="QComboBox" name="to_year">
    <property name="geometry">
     <rect>
-     <x>230</x>
+     <x>250</x>
      <y>150</y>
      <width>81</width>
      <height>22</height>
@@ -1025,7 +1025,7 @@
     <rect>
      <x>180</x>
      <y>100</y>
-     <width>41</width>
+     <width>61</width>
      <height>22</height>
     </rect>
    </property>
@@ -1227,7 +1227,7 @@
     <rect>
      <x>180</x>
      <y>150</y>
-     <width>41</width>
+     <width>61</width>
      <height>22</height>
     </rect>
    </property>
