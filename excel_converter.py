@@ -98,7 +98,7 @@ def open_excel(payrollid):
     for val in s_value:
         person.append(val[1])
         designation.append(val[2])
-        print('{}-{}'.format(person,designation))
+        #print('{}-{}'.format(person,designation))
 
     cell_col = 2
     sheet.Cells(row + 6,cell_col).Value = person[1]
@@ -208,7 +208,7 @@ def print_excel(payrollid):
     for val in s_value:
         person.append(val[1])
         designation.append(val[2])
-        print('{}-{}'.format(person,designation))
+        #print('{}-{}'.format(person,designation))
 
     cell_col = 2
     sheet.Cells(row + 6,cell_col).Value = person[1]

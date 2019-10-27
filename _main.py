@@ -135,7 +135,8 @@ class MainApp(QMainWindow, main_ui):
         settings_table_widget_salary_grade = self.settings_table_widget_salary_grade
         settings_table_widget_salary_designation = self.settings_table_widget_salary_designation
         settings_table_widget_signatory = self.settings_table_widget_signatory
-
+        ##payslip
+        self.pay_slip_print()
 
 
 
@@ -146,7 +147,7 @@ class MainApp(QMainWindow, main_ui):
         self._home_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(1))
         self._payroll_button.clicked.connect(self.show_payroll_home)
         self._payroll_button.clicked.connect(lambda:self.tabWidget.setCurrentIndex(2))
-        self._payslip_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(5))
+        self._payslip_button.clicked.connect(self._payslip_button_action)
         self._quit_button.clicked.connect(self._quit_button_action)
         self._settings_button.clicked.connect(lambda: self.tabWidget.setCurrentIndex(6))
         self._settings_button.clicked.connect(self.show_settings)
@@ -165,6 +166,9 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_ae_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
         self.payroll_ae_excel.clicked.connect(self.payroll_ae_create_excel)
         self.payroll_ae_print.clicked.connect(self.payroll_ae_print_excel)
+        ##payslip
+        self.payslip_employee_button.clicked.connect(self.show_payslip_list)
+        self.payslip_back_button.clicked.connect(self._payslip_button_action)
         ##settings
         self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
         self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
@@ -180,6 +184,9 @@ class MainApp(QMainWindow, main_ui):
         self.settings_edit_signatory.clicked.connect(lambda: self.settings_signatory_table_edit(self.settings_table_widget_signatory))
 
 
+
+
+
 ##MENU BUTTONS
 #____________________________________________________________________________________________________#
     def _quit_button_action(self):
@@ -187,6 +194,11 @@ class MainApp(QMainWindow, main_ui):
         self.tabWidget.setCurrentIndex(0)
         self._container.setVisible(False)
 
+
+    def _payslip_button_action(self):
+        self.tabWidget.setCurrentIndex(5)
+        self.payslip_tab_widget.setCurrentIndex(0)
+        self.generated_payslip.setText('')
 
 ##LOGIN TAB
 #____________________________________________________________________________________________________#
@@ -413,7 +425,6 @@ class MainApp(QMainWindow, main_ui):
     def payroll_ae_print_excel(self):
         payroll_id = int(self.payroll_ae_secret_id.text())
         xc.print_excel(payroll_id)
-
 
 
     def payroll_ae_employee_dict_update(self):
@@ -674,6 +685,71 @@ class MainApp(QMainWindow, main_ui):
             msg.setWindowTitle("Error")
             msg.exec_()
 
+##ADD PAYSLIP
+#____________________________________________________________________________________________________#
+    def pay_slip_print(self):
+
+        tempstr = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">'\
+        '<html><head><meta name="qrichtext" content="1" /><style type="text/css">'\
+        'p, li { white-space: pre-wrap; }'\
+        '</style></head><body style=" font-family:\'MS Shell Dlg 2\'; font-size:9pt; font-weight:600; font-style:normal;">'\
+        '<p align="center" style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>'\
+        '<p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">PHRMO Employee Payslip</p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">__________________________________</p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Employee ID : <span style=" font-weight:400;">1</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Employee : <span style=" font-weight:400;">Jasper Nichol M. Fabella</span><br />Pay Period : <span style=" font-weight:400;">September 1 - 15 2019</span></p>'\
+        '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Basic Salary: <span style=" font-weight:400;">6,780</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">PERA : <span style=" font-weight:400;">1,000</span></p>'\
+        '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Deductions:</p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">   a: <span style=" font-weight:400;">1,999</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:400;">  </span>b: <span style=" font-weight:400;">1,000	</span></p>'\
+        '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:400;">___________________________________________</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Net Salary<span style=" font-weight:400;">: 6,800</span></p>'\
+        '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p></body></html>'
+
+        #print(tempstr)
+        #self.generated_payslip.setText(tempstr)
+        self.show_payslip_employee_list()
+
+
+    def show_payslip_employee_list(self):
+        global payroll_employee_dict
+        global payroll_home_list_dict
+        self.payslip_employee_list_widget.clear()
+        for key,items in payroll_employee_dict.items():
+            self.payslip_employee_list_widget.addItem(key)
+
+
+    def show_payslip_list(self):
+        global payroll_employee_dict
+        global payroll_home_list_dict
+        employee_id = int(payroll_employee_dict[self.payslip_employee_list_widget.currentItem().text()])
+        engine = sqc.Database().engine
+        payroll_record = sqc.Database().payroll_record
+        conn = engine.connect()
+        s = payroll_record.select().where(payroll_record.c.employee_id == employee_id)
+        s_value = conn.execute(s)
+        tempdict = {}
+        for val in s_value:
+            try:
+                tempdict.update({val[1] : val[0]})
+            except:
+                print('duplicate keys')
+
+        templist=[]
+        for key,item in tempdict.items():
+            for key2,items2 in payroll_home_list_dict.items():
+                if key == items2:
+                    templist.append(key2)
+
+        self.payslip_list.clear()
+        for val in templist:
+            self.payslip_list.addItem(val)
+        self.payslip_tab_widget.setCurrentIndex(1)
+
 
 #___________________________________________________DIALOGUE_________________________________________#
 
@@ -722,7 +798,7 @@ class Add_Payroll_Dialogue(QDialog,add_payroll_ui):
         self.buttonBox.accepted.connect(self.ok_button)
 
     def ok_button(self):
-
+        global payroll_ae_table_widget
         if self.operationType == 'add':
             engine = sqc.Database().engine
             payroll_bundle = sqc.Database().payroll_bundle
@@ -762,7 +838,7 @@ class Add_Payroll_Dialogue(QDialog,add_payroll_ui):
                 )
                 conn.execute(s)
                 conn.close()
-
+                payroll_ae_table_widget.setRowCount(0)
             except:
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
