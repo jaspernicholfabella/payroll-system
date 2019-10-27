@@ -1,4 +1,4 @@
-#✏✏✏✏✏✏✐✐✐✐✎✎✎✎✒✒✒✒✑✑✑✑✑✉✉✉✉
+
 import sys
 import os
 from PyQt5 import QtCore,QtGui,QtWidgets,uic
@@ -13,6 +13,7 @@ from sqlalchemy import Table, Column,VARCHAR,INTEGER,Float,String, MetaData,Fore
 from sqlalchemy.sql import exists
 import subprocess
 import sqlconn as sqc
+import excel_converter as xc
 import datetime
 ##globals
 global tabWidget
@@ -61,7 +62,7 @@ class MainApp(QMainWindow, main_ui):
         self.settings_salary_grade_designation.setText('Salary Grade')
         self.settings_signatory_title.setText('Signatory')
         self.payslip_title.setText('Employee Payslip Records')
-        pass
+
 
 
     def Handle_UI_Changes(self):
@@ -91,6 +92,8 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_home_logo.setEnabled(False)
         self.payroll_home_image.setEnabled(False)
         self.payroll_home_design.setEnabled(False)
+        self.payroll_home_view.setEnabled(False)
+        self.payroll_home_view.setVisible(False)
         ##payroll_view
         self.payroll_view_table_widget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
         ##payroll_ae
@@ -151,7 +154,7 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_home_new.clicked.connect(self.payroll_home_new_action)
         self.payroll_home_delete.clicked.connect(self.payroll_home_delete_action)
         self.payroll_home_edit.clicked.connect(self.payroll_home_edit_action)
-        self.payroll_home_view.clicked.connect(self.payroll_home_view_action)
+        self.payroll_home_excel.clicked.connect(self.payroll_home_excel_action)
         ##payroll_view
         self.payroll_view_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
         ##payroll_ae
@@ -159,6 +162,7 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_ae_edit_person.clicked.connect(self.payroll_ae_edit_person_action)
         self.payroll_ae_delete_person.clicked.connect(self.payroll_ae_delete_person_action)
         self.payroll_ae_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
+        self.payroll_ae_excel.clicked.connect(self.payroll_ae_create_excel)
         ##settings
         self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
         self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
@@ -252,6 +256,19 @@ class MainApp(QMainWindow, main_ui):
             msg.setWindowTitle("Error")
             msg.exec_()
 
+    def payroll_home_excel_action(self):
+        global payroll_home_list_widget
+        global payroll_home_list_dict
+        try:
+            payrollid = payroll_home_list_dict[payroll_home_list_widget.currentItem().text()]
+            xc.open_excel(payrollid)
+        except:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText('No Data Selected')
+            msg.setWindowTitle("Error")
+            msg.exec_()
 
     def payroll_home_delete_action(self):
         global payroll_home_list_dict
@@ -261,11 +278,14 @@ class MainApp(QMainWindow, main_ui):
             id = payroll_home_list_dict[payroll_home_list_widget.currentItem().text()]
             engine = sqc.Database().engine
             payroll_bundle = sqc.Database().payroll_bundle
+            payroll_record = sqc.Database().payroll_record
             conn = engine.connect()
             q = payroll_bundle.delete().where(payroll_bundle.c.payrollid == int(id))
             conn.execute(q)
-            conn.close()
+            q2 = payroll_record.delete().where(payroll_record.c.payrollid == int(id))
+            conn.execute(q2)
             self.show_payroll_home()
+            self.show_payroll_ae()
 
         except:
             msg = QMessageBox()
@@ -275,12 +295,6 @@ class MainApp(QMainWindow, main_ui):
             msg.setWindowTitle("Error")
             msg.exec_()
 
-
-
-
-
-    def payroll_home_view_action(self):
-        self.tabWidget.setCurrentIndex(3)
 
 
 
@@ -322,14 +336,10 @@ class MainApp(QMainWindow, main_ui):
             table.insertRow(row_position)
             for i in range(0,24):
                 table.setItem(row_position,i ,QTableWidgetItem(str(val[i])))
-
-
-
         conn.close()
 
 
     def payroll_ae_add_person_action(self):
-
         templist = []
         for i in range(0,24):
             templist.append('')
@@ -379,6 +389,10 @@ class MainApp(QMainWindow, main_ui):
             msg.setInformativeText('No Rows Selected')
             msg.setWindowTitle("Error")
             msg.exec_()
+
+    def payroll_ae_create_excel(self):
+        payroll_id = int(self.payroll_ae_secret_id.text())
+        xc.open_excel(payroll_id)
 
 
 
