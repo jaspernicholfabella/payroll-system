@@ -1653,7 +1653,7 @@
        <string>Employee Search:</string>
       </property>
      </widget>
-     <widget class="QLineEdit" name="lineEdit_4">
+     <widget class="QLineEdit" name="payslip_search">
       <property name="geometry">
        <rect>
         <x>162</x>
@@ -1702,7 +1702,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="tab_6">
        <attribute name="title">

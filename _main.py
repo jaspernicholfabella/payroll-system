@@ -158,6 +158,7 @@ class MainApp(QMainWindow, main_ui):
         self.payroll_home_edit.clicked.connect(self.payroll_home_edit_action)
         self.payroll_home_excel.clicked.connect(self.payroll_home_excel_action)
         self.payroll_home_print.clicked.connect(self.payroll_home_print_action)
+        self.payroll_home_search.textChanged.connect(self.payroll_home_on_textChanged)
         ##payroll_view
         self.payroll_view_quit.clicked.connect(lambda: self.tabWidget.setCurrentIndex(2))
         ##payroll_ae
@@ -171,6 +172,7 @@ class MainApp(QMainWindow, main_ui):
         self.payslip_employee_button.clicked.connect(self.show_payslip_list)
         self.payslip_back_button.clicked.connect(self._payslip_button_action)
         self.payslip_generate.clicked.connect(self.payslip_print)
+        self.payslip_search.textChanged.connect(self.payslip_on_textChanged)
         ##settings
         self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
         self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
@@ -347,6 +349,21 @@ class MainApp(QMainWindow, main_ui):
             item = QtWidgets.QListWidgetItem(key)
             payroll_home_list_widget.addItem(item)
         conn.close()
+
+    def payroll_home_on_textChanged(self):
+        global payroll_home_list_dict
+        payroll_home_list_widget.clear()
+        if self.payroll_home_search.text() == '':
+            for key,value in payroll_home_list_dict.items():
+                payroll_home_list_widget.addItem(key)
+        else:
+            for key,value in payroll_home_list_dict.items():
+                if str(self.payroll_home_search.text()).lower() in str(key).lower():
+                    payroll_home_list_widget.addItem(key)
+
+
+
+
 
 ##PAYROLL AE TAB
 #___________________________________________________________________________________________________#
@@ -772,6 +789,22 @@ class MainApp(QMainWindow, main_ui):
         for key,items in payroll_employee_dict.items():
             self.payslip_employee_list_widget.addItem(key)
         self.show_payroll_home()
+
+
+    def payslip_on_textChanged(self):
+        global payroll_employee_dict
+        self.payslip_employee_list_widget.clear()
+        if self.payslip_search.text() == '':
+            for key, value in payroll_employee_dict.items():
+                self.payslip_employee_list_widget.addItem(key)
+        else:
+            for key,value in payroll_employee_dict.items():
+                if str(self.payslip_search.text()).lower() in str(key).lower():
+                    self.payslip_employee_list_widget.addItem(key)
+
+
+
+
 
     def show_payslip_list(self):
         global payroll_employee_dict
