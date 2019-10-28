@@ -53,16 +53,16 @@ class MainApp(QMainWindow, main_ui):
 
 
     def Default_Text(self):
-        self.login_title.setText('PHRMO Payroll Information System')
-        self.home_title.setText('PHRMO Payroll Information System')
-        self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
-        self.payroll_home_title.setText('Payroll Record')
-        self.settings_account_title.setText('Accounts')
-        self.settings_salary_grade_title.setText('Designation')
-        self.settings_salary_grade_designation.setText('Salary Grade')
-        self.settings_signatory_title.setText('Signatory')
-        self.payslip_title.setText('Employee Payslip Records')
-
+        # self.login_title.setText('PHRMO Payroll Information System')
+        # self.home_title.setText('PHRMO Payroll Information System')
+        # self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
+        # self.payroll_home_title.setText('Payroll Record')
+        # self.settings_account_title.setText('Accounts')
+        # self.settings_salary_grade_title.setText('Designation')
+        # self.settings_salary_grade_designation.setText('Salary Grade')
+        # self.settings_signatory_title.setText('Signatory')
+        # self.payslip_title.setText('Employee Payslip Records')
+        pass
 
 
     def Handle_UI_Changes(self):
@@ -112,6 +112,7 @@ class MainApp(QMainWindow, main_ui):
         self.payslip_logo_1.setEnabled(False)
         self.payslip_logo_2.setEnabled(False)
         self.payslip_tab_widget.tabBar().setVisible(False)
+        self._payslip_employee_id.setVisible(False)
         self.payslip_tab_widget.setCurrentIndex(0)
         ##settings
         self.show_settings()
@@ -136,7 +137,7 @@ class MainApp(QMainWindow, main_ui):
         settings_table_widget_salary_designation = self.settings_table_widget_salary_designation
         settings_table_widget_signatory = self.settings_table_widget_signatory
         ##payslip
-        self.pay_slip_print()
+        self.show_payslip_employee_list()
 
 
 
@@ -169,6 +170,7 @@ class MainApp(QMainWindow, main_ui):
         ##payslip
         self.payslip_employee_button.clicked.connect(self.show_payslip_list)
         self.payslip_back_button.clicked.connect(self._payslip_button_action)
+        self.payslip_generate.clicked.connect(self.payslip_print)
         ##settings
         self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
         self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
@@ -687,69 +689,121 @@ class MainApp(QMainWindow, main_ui):
 
 ##ADD PAYSLIP
 #____________________________________________________________________________________________________#
-    def pay_slip_print(self):
+    def payslip_print(self):
+        try:
+            global payroll_home_list_dict
+            employee_id = int(self._payslip_employee_id.text())
+            employee_name = ''
+            payroll_id = payroll_home_list_dict[self.payslip_list.currentItem().text()]
 
-        tempstr = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">'\
+            payroll_date = str(self.payslip_list.currentItem().text()).split('#')[0].strip()
+            payroll_date = payroll_date.replace('✎FOR THE PERIOD','').strip()
+
+            engine = sqc.Database().engine
+            payroll_record = sqc.Database().payroll_record
+            conn = engine.connect()
+            s = payroll_record.select().where(payroll_record.c.employee_id == employee_id)\
+                .where(payroll_record.c.payrollid == payroll_id)
+            s_value = conn.execute(s)
+
+            for val in s_value:
+                employee_name = val[3]
+                amount_accrued = val[6]
+                pera  = val[7]
+                tempdict = {
+                    'W/TAX' : val[9],
+                    'GSIS EDUC\'L. LOAN' : val[10],
+                    'PAG-IBIG CONTRIBUTION PERSONAL' : val[11],
+                    'PAG-IBIG CONTRIBUTION GOV\'T' : val[12],
+                    'PAG-IBIG MPL' : val[13],
+                    'PAG-IBIG CALAMITY LOAN' : val[14],
+                    'PAG-IBIG HOUSING LOAN' : val[15],
+                    'PHILHEALTH CONTRIBUTION PERSONAL' : val[16],
+                    'PHILHEALTH CONTRIBUTION GOV\'T' : val[17],
+                    'RURAL BANK OF PILAR' : val[18],
+                    'GEMPCO Reg. Loan':val[19],
+                    'GEMPCO-EDUCL. LOAN' : val[20],
+                    'SOPRECCO REG. LOAN' : val[21],
+                    'SOPRECCO-EDUCL. LOAN' : val[22],
+                    'SOPRECCO SHARE' : val[23],
+                }
+                deduction_total = 0
+                for i in range(9, 24):
+                    deduction_total += val[i]
+        except:
+            pass
+
+
+
+        tempstr1 = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">'\
         '<html><head><meta name="qrichtext" content="1" /><style type="text/css">'\
         'p, li { white-space: pre-wrap; }'\
         '</style></head><body style=" font-family:\'MS Shell Dlg 2\'; font-size:9pt; font-weight:600; font-style:normal;">'\
         '<p align="center" style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>'\
-        '<p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">PHRMO Employee Payslip</p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">__________________________________</p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Employee ID : <span style=" font-weight:400;">1</span></p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Employee : <span style=" font-weight:400;">Jasper Nichol M. Fabella</span><br />Pay Period : <span style=" font-weight:400;">September 1 - 15 2019</span></p>'\
+        '<p align="center" style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-size:11pt; text-decoration: underline;">PHRMO EMPLOYEE PAYSLIP</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">__________________________________</p>' \
+                   '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p>' \
+                   '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Employee ID : <span style=" font-weight:400;">'+''.format(employee_id)+'</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Employee : <span style=" font-weight:400;">'+employee_name+'</span><br />Pay Period : <span style=" font-weight:400;">'+payroll_date+'</span></p>'\
         '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><br /></p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Basic Salary: <span style=" font-weight:400;">6,780</span></p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">PERA : <span style=" font-weight:400;">1,000</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Basic Salary: <span style=" font-weight:400;">'+'{:,.2f}'.format(amount_accrued)+'</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">PERA : <span style=" font-weight:400;">'+'{:,.2f}'.format(pera)+'</span></p>'\
         '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Deductions:</p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">   a: <span style=" font-weight:400;">1,999</span></p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:400;">  </span>b: <span style=" font-weight:400;">1,000	</span></p>'\
-        '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:400;">___________________________________________</span></p>'\
-        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Net Salary<span style=" font-weight:400;">: 6,800</span></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Deductions:</p>'
+        tempstr2 = ''
+
+        for key,value in tempdict.items():
+            if value > 1:
+                tempstr2 += '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">   {}: <span style=" font-weight:400;">{:,.2f}</span></p>'.format(key,value)
+
+
+        tempstr3 = '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p>'\
+        '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;"><span style=" font-weight:400;">______________________________________</span></p>' \
+                   '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p>' \
+                   '<p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">Net Salary<span style=" font-weight:400;">: '+'{:,.2f}'.format((amount_accrued + pera) - deduction_total)+'</span></p>'\
         '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p></body></html>'
 
-        #print(tempstr)
-        #self.generated_payslip.setText(tempstr)
-        self.show_payslip_employee_list()
+        self.generated_payslip.setText(tempstr1 + tempstr2 + tempstr3)
 
 
     def show_payslip_employee_list(self):
         global payroll_employee_dict
-        global payroll_home_list_dict
         self.payslip_employee_list_widget.clear()
         for key,items in payroll_employee_dict.items():
             self.payslip_employee_list_widget.addItem(key)
-
+        self.show_payroll_home()
 
     def show_payslip_list(self):
         global payroll_employee_dict
         global payroll_home_list_dict
-        employee_id = int(payroll_employee_dict[self.payslip_employee_list_widget.currentItem().text()])
-        engine = sqc.Database().engine
-        payroll_record = sqc.Database().payroll_record
-        conn = engine.connect()
-        s = payroll_record.select().where(payroll_record.c.employee_id == employee_id)
-        s_value = conn.execute(s)
-        tempdict = {}
-        for val in s_value:
-            try:
-                tempdict.update({val[1] : val[0]})
-            except:
-                print('duplicate keys')
+        try:
+            employee_id = int(payroll_employee_dict[self.payslip_employee_list_widget.currentItem().text()])
+            self._payslip_employee_id.setText(str(employee_id))
+            engine = sqc.Database().engine
+            payroll_record = sqc.Database().payroll_record
+            conn = engine.connect()
+            s = payroll_record.select().where(payroll_record.c.employee_id == employee_id)
+            s_value = conn.execute(s)
+            tempdict = {}
+            for val in s_value:
+                try:
+                    tempdict.update({val[1] : val[0]})
+                except:
+                    print('duplicate keys')
 
-        templist=[]
-        for key,item in tempdict.items():
-            for key2,items2 in payroll_home_list_dict.items():
-                if key == items2:
-                    templist.append(key2)
+            templist=[]
+            for key,item in tempdict.items():
+                for key2,items2 in payroll_home_list_dict.items():
+                    if key == items2:
+                        templist.append(key2)
 
-        self.payslip_list.clear()
-        for val in templist:
-            self.payslip_list.addItem(val)
-        self.payslip_tab_widget.setCurrentIndex(1)
+            self.payslip_list.clear()
+            for val in templist:
+                self.payslip_list.addItem(val)
 
+            self.payslip_tab_widget.setCurrentIndex(1)
+        except:
+            pass
 
 #___________________________________________________DIALOGUE_________________________________________#
 
