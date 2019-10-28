@@ -29,7 +29,7 @@ global payroll_ae_table_widget
 global payroll_employee_dict
 global salary_grade_dict
 global designation_dict
-
+global home_important_text
 
 main_ui, _ = loadUiType('Payroll_System.ui')
 add_payroll_ui, _ = loadUiType('Add_Payroll.ui')
@@ -68,6 +68,7 @@ class MainApp(QMainWindow, main_ui):
     def Handle_UI_Changes(self):
         ##globals
         global tabWidget
+        global home_important_text
         global settings_table_widget_accounts
         global settings_table_widget_salary_grade
         global settings_table_widget_salary_designation
@@ -78,6 +79,7 @@ class MainApp(QMainWindow, main_ui):
         global payroll_ae_table_widget
         ##main
         tabWidget = self.tabWidget
+        home_important_text = self.home_important_text
         self._container.setVisible(False)
         self.tabWidget.tabBar().setVisible(False)
         self.tabWidget.setCurrentIndex(0)
@@ -199,6 +201,7 @@ class MainApp(QMainWindow, main_ui):
         self._container.setVisible(False)
 
 
+
     def _payslip_button_action(self):
         self.tabWidget.setCurrentIndex(5)
         self.payslip_tab_widget.setCurrentIndex(0)
@@ -217,21 +220,34 @@ class MainApp(QMainWindow, main_ui):
         s = payroll_admin.select()
         s_value = conn.execute(s)
 
-
         for val in s_value:
             if str(username).lower() == str(val[1]).lower() and str(password).lower() == str(val[2]).lower():
                 if val[3] == 'admin':
                     self.tabWidget.setCurrentIndex(1)
+                    self.employee_search_widget.setVisible(True)
                     self._container.setVisible(True)
                     self._home_button.setVisible(True)
                     self._payroll_button.setVisible(True)
                     self._settings_button.setVisible(True)
+                    self.home_important_text.setText(str(val[4]))
+                    self.payslip_employee_list_widget.clear()
+                    for key, items in payroll_employee_dict.items():
+                        self.payslip_employee_list_widget.addItem(key)
+                    self.show_payroll_home()
+
                 elif val[3] == 'user':
                     self.tabWidget.setCurrentIndex(1)
+                    self.employee_search_widget.setVisible(False)
                     self._container.setVisible(True)
                     self._home_button.setVisible(True)
                     self._payroll_button.setVisible(False)
                     self._settings_button.setVisible(False)
+                    self.home_important_text.setText(str(val[4]))
+                    self.payslip_employee_list_widget.clear()
+                    for key, items in payroll_employee_dict.items():
+                        if val[4] == items:
+                            self.payslip_employee_list_widget.addItem(key)
+                    self.show_payroll_home()
 
             else:
                 self.login_warning.setText('Wrong Username or Password.')
@@ -508,6 +524,7 @@ class MainApp(QMainWindow, main_ui):
             table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
             table.setItem(row_position, 3, QTableWidgetItem(str(val[3])))
+            table.setItem(row_position, 4, QTableWidgetItem(str(val[4])))
 
         s = salarygrade.select().order_by(asc(salarygrade.c.salarytitle))
         s_value = conn.execute(s)
@@ -789,6 +806,8 @@ class MainApp(QMainWindow, main_ui):
         for key,items in payroll_employee_dict.items():
             self.payslip_employee_list_widget.addItem(key)
         self.show_payroll_home()
+
+
 
 
     def payslip_on_textChanged(self):
@@ -1273,39 +1292,73 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
 class Accounts_Dialogue(QDialog,accounts_ui):
     edit_id = 0
     operationType = ''
+
     def __init__(self,parent=None):
         super(Accounts_Dialogue,self).__init__(parent)
         self.setupUi(self)
+        self.admin_employee_combo.setVisible(False)
+        #self.admin_label.setVisible(False)
+        self.previlage_combo.currentIndexChanged.connect(self.onIndexChange)
 
     def ShowDialogue(self,id,username,password,dependencies='',operationType = ''):
+        global payroll_employee_dict
         self.username.setText(username)
         self.password.setText(password)
         self.edit_id = id
         self.operationType = operationType
         self.buttonBox.accepted.connect(self.ok_button)
 
+        for key,value in payroll_employee_dict.items():
+            self.admin_employee_combo.addItem(key)
+
+    def onIndexChange(self):
+        if self.previlage_combo.currentText() == 'admin':
+            #self.admin_label.setVisible(False)
+            self.admin_employee_combo.setVisible(False)
+        else:
+            #self.admin_label.setVisble(True)
+            self.admin_employee_combo.setVisible(True)
+
+
+
     def ok_button(self):
+        global payroll_employee_dict
         engine = sqc.Database().engine
         payroll_admin = sqc.Database().payroll_admin
         conn = engine.connect()
 
         if self.operationType == 'edit':
+
+            if self.previlage_combo.currentText() == 'admin':
+                employee_id = 0
+            else:
+                employee_id = payroll_employee_dict[self.admin_employee_combo.currentText()]
+
             s = payroll_admin.update().where(payroll_admin.c.userid == self.edit_id).\
                 values(username = self.username.text(),
                        password = self.password.text(),
-                       previlage = self.previlage_combo.currentText())
+                       previlage = self.previlage_combo.currentText(),
+                       employee_id = employee_id)
             conn.execute(s)
             self.show_settings()
 
         elif self.operationType == 'add':
+
+            if self.previlage_combo.currentText() == 'admin':
+                employee_id = 0
+            else:
+                employee_id = payroll_employee_dict[self.admin_employee_combo.currentText()]
+
             s = payroll_admin.insert().values(
                 username=self.username.text(),
                 password=self.password.text(),
-                previlage=self.previlage_combo.currentText()
-            )
+                previlage=self.previlage_combo.currentText(),
+                employee_id=employee_id)
             conn.execute(s)
             self.show_settings()
+
         conn.close()
+
 
     def show_settings(self):
         global settings_table_widget_accounts
@@ -1323,7 +1376,10 @@ class Accounts_Dialogue(QDialog,accounts_ui):
             table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
             table.setItem(row_position, 3, QTableWidgetItem(str(val[3])))
+            table.setItem(row_position, 4, QTableWidgetItem(str(val[4])))
         conn.close()
+
+
 
 class Salary_Grade_Dialogue(QDialog,salary_grade_ui):
     edit_id = 0

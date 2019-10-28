@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>324</width>
-    <height>181</height>
+    <height>192</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -17,7 +17,7 @@
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>140</y>
+     <y>150</y>
      <width>301</width>
      <height>32</height>
     </rect>
@@ -32,9 +32,9 @@
   <widget class="QLineEdit" name="username">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>140</x>
      <y>20</y>
-     <width>141</width>
+     <width>171</width>
      <height>22</height>
     </rect>
    </property>
@@ -64,9 +64,9 @@
   <widget class="QLineEdit" name="password">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>140</x>
      <y>50</y>
-     <width>141</width>
+     <width>171</width>
      <height>22</height>
     </rect>
    </property>
@@ -121,9 +121,9 @@
   <widget class="QComboBox" name="previlage_combo">
    <property name="geometry">
     <rect>
-     <x>170</x>
+     <x>140</x>
      <y>80</y>
-     <width>141</width>
+     <width>171</width>
      <height>22</height>
     </rect>
    </property>
@@ -137,6 +137,35 @@
      <string>user</string>
     </property>
    </item>
+  </widget>
+  <widget class="QLabel" name="admin_label">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>110</y>
+     <width>141</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>employee:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="admin_employee_combo">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>110</y>
+     <width>171</width>
+     <height>22</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <resources/>

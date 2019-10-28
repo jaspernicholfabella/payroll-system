@@ -72,7 +72,8 @@ class Database():
                           Column('userid',INTEGER,primary_key=True),
                           Column('username',VARCHAR(50)),
                           Column('password',VARCHAR(50)),
-                          Column('previlage',VARCHAR(50)))
+                          Column('previlage',VARCHAR(50)),
+                          Column('employee_id',INTEGER))
 
     payroll_signatory = Table('payroll_signatory',meta,
                               Column('signatoryid',INTEGER,primary_key=True),
@@ -137,5 +138,18 @@ class Database():
         for key,item in signatories.items():
             print('{} : {}'.format(key,item))
             ins = payroll_signatory.insert().values(name = key,designation = item)
-            result = conn.execute(ins)
 
+
+
+    s = payroll_admin.select()
+    s_value = conn.execute(s)
+    z = 0
+    for val in s_value:
+        z += 1
+
+    if z == 0:
+        ins = payroll_admin.insert().values(username = 'admin',
+                                            password = 'admin',
+                                            previlage = 'admin',
+                                            employee_id = 0)
+        result = conn.execute(ins)

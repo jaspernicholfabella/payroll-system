@@ -21,7 +21,7 @@ def open_excel(payrollid):
     sheet = book.Worksheets(1)
     excel.Visible = True
     payroll_title = payroll_name.split('#')[0].strip()
-    payroll_title = str(payroll_title[1:])
+    payroll_title = str(payroll_title[1:]).upper()
     sheet.Range("A4").Value = payroll_title
 
     conn = engine.connect()
