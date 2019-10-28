@@ -1,0 +1,39 @@
+<!DOCTYPE RCC>
+<RCC version = "1.0">
+<qresource>
+    <file>icons/add-database.png</file>
+    <file>icons/briefcase.png</file>
+    <file>icons/bulleted-list.png</file>
+    <file>icons/calendar.png</file>
+    <file>icons/cancel.png</file>
+    <file>icons/checked.png</file>
+    <file>icons/clock.png</file>
+    <file>icons/connect.png</file>
+    <file>icons/delete.png</file>
+    <file>icons/edit.png</file>
+    <file>icons/female-user.png</file>
+    <file>icons/hdd.png</file>
+    <file>icons/home.png</file>
+    <file>icons/moleskine.png</file>
+    <file>icons/news.png</file>
+    <file>icons/plus.png</file>
+    <file>icons/poster.png</file>
+    <file>icons/print.png</file>
+    <file>icons/remove.png</file>
+    <file>icons/restart.png</file>
+    <file>icons/scroll.png</file>
+    <file>icons/search.png</file>
+    <file>icons/search-folder.png</file>
+    <file>icons/send-to-printer.png</file>
+    <file>icons/shutdown.png</file>
+    <file>icons/ssd.png</file>
+    <file>icons/support.png</file>
+    <file>icons/trash-can.png</file>
+    <file>icons/user-male.png</file>
+    <file>icons/xls.png</file>
+    <file>icons/SORSOGON.png</file>
+    <file>icons/ph_design.png</file>
+    <file>icons/ph_design_2.png</file>
+
+</qresource>
+</RCC>
