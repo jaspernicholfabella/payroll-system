@@ -53,17 +53,16 @@ class MainApp(QMainWindow, main_ui):
 
 
     def Default_Text(self):
-        # self.login_title.setText('PHRMO Payroll Information System')
-        # self.home_title.setText('PHRMO Payroll Information System')
-        # self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
-        # self.payroll_home_title.setText('Payroll Record')
-        # self.settings_account_title.setText('Accounts')
-        # self.settings_salary_grade_title.setText('Designation')
-        # self.settings_salary_grade_designation.setText('Salary Grade')
-        # self.settings_signatory_title.setText('Signatory')
-        # self.payslip_title.setText('Employee Payslip Records')
-        pass
-
+        self.login_title.setText('PHRMO Payroll Information System')
+        self.home_title.setText('PHRMO Payroll Information System')
+        self.home_text.setText('This System is created as a Capstone Project from Sorsogon State College 2019 ©')
+        self.payroll_home_title.setText('Payroll Record')
+        self.settings_account_title.setText('Accounts')
+        self.settings_salary_grade_title.setText('Designation')
+        self.settings_salary_grade_designation.setText('Salary Grade')
+        self.settings_signatory_title.setText('Signatory')
+        self.payslip_title.setText('Employee Payslip Records')
+        self.home_important_text.setVisible(False)
 
     def Handle_UI_Changes(self):
         ##globals
