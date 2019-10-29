@@ -15,6 +15,7 @@ import subprocess
 import sqlconn as sqc
 import excel_converter as xc
 import datetime
+import create_doc as cd
 ##globals
 global tabWidget
 global settings_table_widget_accounts
@@ -110,6 +111,7 @@ class MainApp(QMainWindow, main_ui):
         payroll_ae_table_widget.setColumnHidden(2, True)
         self.payroll_ae_employee_dict_update()
         ##payslip
+        self.payslip_print_button.setVisible(False)
         self.payslip_logo_1.setEnabled(False)
         self.payslip_logo_2.setEnabled(False)
         self.payslip_tab_widget.tabBar().setVisible(False)
@@ -174,6 +176,7 @@ class MainApp(QMainWindow, main_ui):
         self.payslip_back_button.clicked.connect(self._payslip_button_action)
         self.payslip_generate.clicked.connect(self.payslip_print)
         self.payslip_search.textChanged.connect(self.payslip_on_textChanged)
+        self.payslip_print_button.clicked.connect(self.print_payslip_button_action)
         ##settings
         self.settings_edit_account.clicked.connect(lambda: self.settings_account_table_edit(self.settings_table_widget_accounts))
         self.settings_add_account.clicked.connect(lambda: self.settings_account_table_add(self.settings_table_widget_accounts))
@@ -195,6 +198,7 @@ class MainApp(QMainWindow, main_ui):
 ##MENU BUTTONS
 #____________________________________________________________________________________________________#
     def _quit_button_action(self):
+        self.payslip_print_button.setVisible(False)
         self.login_warning.setText(' ')
         self.tabWidget.setCurrentIndex(0)
         self._container.setVisible(False)
@@ -202,6 +206,7 @@ class MainApp(QMainWindow, main_ui):
 
 
     def _payslip_button_action(self):
+        self.payslip_print_button.setVisible(False)
         self.tabWidget.setCurrentIndex(5)
         self.payslip_tab_widget.setCurrentIndex(0)
         self.generated_payslip.setText('')
@@ -255,11 +260,13 @@ class MainApp(QMainWindow, main_ui):
         self.login_password.setText('')
 
 
+
         if username == 'admin' and password == 'admin':
             self.tabWidget.setCurrentIndex(1)
             self._container.setVisible(True)
         else:
             self.login_warning.setText('Wrong Username or Password.')
+        self.payslip_print_button.setVisible(False)
 
 
 ##PAYROLL HOME TAB
@@ -364,6 +371,7 @@ class MainApp(QMainWindow, main_ui):
             item = QtWidgets.QListWidgetItem(key)
             payroll_home_list_widget.addItem(item)
         conn.close()
+        self.payslip_print_button.setVisible(False)
 
     def payroll_home_on_textChanged(self):
         global payroll_home_list_dict
@@ -556,6 +564,7 @@ class MainApp(QMainWindow, main_ui):
             table.setItem(row_position, 1, QTableWidgetItem(str(val[1])))
             table.setItem(row_position, 2, QTableWidgetItem(str(val[2])))
         conn.close()
+        self.payslip_print_button.setVisible(False)
 
     def settings_account_table_edit(self,table):
         try:
@@ -763,9 +772,9 @@ class MainApp(QMainWindow, main_ui):
                 deduction_total = 0
                 for i in range(9, 24):
                     deduction_total += val[i]
+
         except:
             pass
-
 
 
         tempstr1 = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">'\
@@ -797,6 +806,58 @@ class MainApp(QMainWindow, main_ui):
         '<p style="-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-weight:400;"><br /></p></body></html>'
 
         self.generated_payslip.setText(tempstr1 + tempstr2 + tempstr3)
+        self.payslip_print_button.setVisible(True)
+
+
+
+    def print_payslip_button_action(self):
+        global payroll_home_list_dict
+        employee_id = int(self._payslip_employee_id.text())
+        payroll_id = payroll_home_list_dict[self.payslip_list.currentItem().text()]
+
+        payroll_date = str(self.payslip_list.currentItem().text()).split('#')[0].strip()
+        payroll_date = payroll_date.replace('✎FOR THE PERIOD', '').strip()
+
+        engine = sqc.Database().engine
+        payroll_record = sqc.Database().payroll_record
+        conn = engine.connect()
+        s = payroll_record.select().where(payroll_record.c.employee_id == employee_id) \
+            .where(payroll_record.c.payrollid == payroll_id)
+        s_value = conn.execute(s)
+
+        for val in s_value:
+            employee_name = val[3]
+            designation = val[4]
+            amount_accrued = val[6]
+            pera = val[7]
+            tempdict = {
+                'W/TAX': val[9],
+                'GSIS EDUC\'L. LOAN': val[10],
+                'PAG-IBIG CONTRIBUTION PERSONAL': val[11],
+                'PAG-IBIG CONTRIBUTION GOV\'T': val[12],
+                'PAG-IBIG MPL': val[13],
+                'PAG-IBIG CALAMITY LOAN': val[14],
+                'PAG-IBIG HOUSING LOAN': val[15],
+                'PHILHEALTH CONTRIBUTION PERSONAL': val[16],
+                'PHILHEALTH CONTRIBUTION GOV\'T': val[17],
+                'RURAL BANK OF PILAR': val[18],
+                'GEMPCO Reg. Loan': val[19],
+                'GEMPCO-EDUCL. LOAN': val[20],
+                'SOPRECCO REG. LOAN': val[21],
+                'SOPRECCO-EDUCL. LOAN': val[22],
+                'SOPRECCO SHARE': val[23],
+            }
+            deduction_total = 0
+            for i in range(9, 24):
+                deduction_total += val[i]
+
+        deduction = []
+        for key,value in tempdict.items():
+            if value > 0:
+                deduction.append([key,value])
+
+        cd.create(employee_name,designation,payroll_date,amount_accrued,pera,deduction,deduction_total)
+
 
 
     def show_payslip_employee_list(self):
