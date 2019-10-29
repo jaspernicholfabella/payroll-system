@@ -1,1 +1,3 @@
 pyrcc5 AMOLED.qss -o amoled_rc.py
+pip install -r requirements.txt
+pip install -U -r requirements.txt 
