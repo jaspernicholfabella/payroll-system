@@ -228,6 +228,7 @@ class MainApp(QMainWindow, main_ui):
             if str(username).lower() == str(val[1]).lower() and str(password).lower() == str(val[2]).lower():
                 if val[3] == 'admin':
                     self.tabWidget.setCurrentIndex(1)
+                    self.payslip_print_button_container.setVisible(True)
                     self.employee_search_widget.setVisible(True)
                     self._container.setVisible(True)
                     self._home_button.setVisible(True)
@@ -241,6 +242,7 @@ class MainApp(QMainWindow, main_ui):
 
                 elif val[3] == 'user':
                     self.tabWidget.setCurrentIndex(1)
+                    self.payslip_print_button_container.setVisible(False)
                     self.employee_search_widget.setVisible(False)
                     self._container.setVisible(True)
                     self._home_button.setVisible(True)
