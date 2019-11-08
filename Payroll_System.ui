@@ -99,8 +99,20 @@
       <height>611</height>
      </rect>
     </property>
+    <property name="minimumSize">
+     <size>
+      <width>731</width>
+      <height>611</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>731</width>
+      <height>610</height>
+     </size>
+    </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>2</number>
     </property>
     <widget class="QWidget" name="tab_4">
      <attribute name="title">
@@ -677,20 +689,10 @@
        </rect>
       </property>
      </widget>
-     <widget class="QLineEdit" name="payroll_home_search">
-      <property name="geometry">
-       <rect>
-        <x>370</x>
-        <y>30</y>
-        <width>161</width>
-        <height>21</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="payroll_home_image">
       <property name="geometry">
        <rect>
-        <x>530</x>
+        <x>580</x>
         <y>30</y>
         <width>31</width>
         <height>21</height>
@@ -732,7 +734,7 @@
        </font>
       </property>
       <property name="text">
-       <string>Search Record :</string>
+       <string>Search Office:</string>
       </property>
      </widget>
      <widget class="QPushButton" name="payroll_home_logo">
@@ -788,6 +790,260 @@
       <property name="flat">
        <bool>true</bool>
       </property>
+     </widget>
+     <widget class="QComboBox" name="payroll_home_search">
+      <property name="geometry">
+       <rect>
+        <x>370</x>
+        <y>30</y>
+        <width>211</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="palette">
+       <palette>
+        <active>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="AlternateBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </active>
+        <inactive>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="AlternateBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </inactive>
+        <disabled>
+         <colorrole role="Button">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+         <colorrole role="AlternateBase">
+          <brush brushstyle="SolidPattern">
+           <color alpha="255">
+            <red>255</red>
+            <green>255</green>
+            <blue>255</blue>
+           </color>
+          </brush>
+         </colorrole>
+        </disabled>
+       </palette>
+      </property>
+      <item>
+       <property name="text">
+        <string>All Offices</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Governor</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Members of the Sangguniang Panlalawigan</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Accountant </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Administrator </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Agriculturist </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Assessor </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Budget Officer </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Cooperative Officer</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Engineer </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Environment and Natural Resources Officer </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial General Services Officer </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Health Officer </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Human Resource Management Officer</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Legal Officer </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Planning and Development Coordinator </string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Social Welfare and Development Officer</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Tourism Officer</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Treasurer</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Provincial Veterinarian</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Secretary to the Sangguniang Panlalawigan</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office Provincial Internal Control Officer</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office of the Vice Governor</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Office Provincial Internal Control Officer</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Donsol District Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Dr. Fernando B. Duran, Sr. Memorial Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Irosin District Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Magallanes Medicare Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Matnog Medicare Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Pantaleon G. Gotladera Memorial Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Prieto Diaz Municipal Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Provincial Library and Information Center</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Public Employment Services Office</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Salvador R. Encinas District Hospital</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Sorsogon Provincial Disaster Risk Reduction Management Office</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>V.L. Peralta Memorial Hospital</string>
+       </property>
+      </item>
      </widget>
     </widget>
     <widget class="QWidget" name="tab_3">

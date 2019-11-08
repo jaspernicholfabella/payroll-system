@@ -84,7 +84,8 @@ class Database():
                            Column('payrollid',INTEGER,primary_key=True),
                            Column('payroll_date_from',String),
                            Column('payroll_date_to',String),
-                           Column('payroll_name',String),)
+                           Column('payroll_name',String))
+                           #Column('payroll_offices',String))
 
 
     payroll_record = Table('payroll_record',meta,
