@@ -31,7 +31,7 @@ global payroll_employee_dict
 global salary_grade_dict
 global designation_dict
 global home_important_text
-
+global payroll_home_search
 main_ui, _ = loadUiType('Payroll_System.ui')
 add_payroll_ui, _ = loadUiType('Add_Payroll.ui')
 add_employee_ui, _ = loadUiType('Add_Employee.ui')
@@ -77,6 +77,7 @@ class MainApp(QMainWindow, main_ui):
         global payroll_ae_title
         global payroll_ae_secret_id
         global payroll_ae_table_widget
+        global payroll_home_search
         ##main
         tabWidget = self.tabWidget
         home_important_text = self.home_important_text
@@ -91,11 +92,13 @@ class MainApp(QMainWindow, main_ui):
         self.home_design.setEnabled(False)
         ##payroll_home
         payroll_home_list_widget = self.payroll_home_list_widget
+        payroll_home_search = self.payroll_home_search
         self.payroll_home_logo.setEnabled(False)
         self.payroll_home_image.setEnabled(False)
         self.payroll_home_design.setEnabled(False)
         self.payroll_home_view.setEnabled(False)
         self.payroll_home_view.setVisible(False)
+
         ##payroll_view
         self.payroll_view_table_widget.horizontalHeader().setSectionResizeMode(QtWidgets.QHeaderView.ResizeToContents)
         ##payroll_ae
@@ -355,6 +358,7 @@ class MainApp(QMainWindow, main_ui):
 
 
     def show_payroll_home(self):
+        self.payroll_home_search.setCurrentIndex(0)
         global payroll_home_list_dict
         global payroll_home_list_widget
         payroll_home_list_widget.clear()
@@ -978,30 +982,30 @@ class Add_Payroll_Dialogue(QDialog,add_payroll_ui):
                 py_name = ''
 
                 if self.from_month.currentText() == self.to_month.currentText():
-                    py_name = '✎FOR THE PERIOD {} {}-{}, {} #[{}]_{}'.format(self.from_month.currentText(),
+                    py_name = '✎FOR THE PERIOD {} {}-{}, {} #_{}_[{}]'.format(self.from_month.currentText(),
                                                                      self.from_day.currentText(),
                                                                      self.to_day.currentText(),
                                                                      self.from_year.currentText(),
-                                                                     datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                                                     self.office.currentText())
+                                                                     self.office.currentText(),
+                                                                     datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                 else:
                     if self.from_year.currentText() == self.to_year.currentText():
-                        py_name = '✎FOR THE PERIOD {} {} - {} {}, {} #[{}]_{}'.format(self.from_month.currentText(),
+                        py_name = '✎FOR THE PERIOD {} {} - {} {}, {} #_{}_[{}]'.format(self.from_month.currentText(),
                                                                         self.from_day.currentText(),
                                                                         self.to_month.currentText(),
                                                                         self.to_day.currentText(),
                                                                         self.from_year.currentText(),
-                                                                        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                                                        self.office.currentText())
+                                                                        self.office.currentText(),
+                                                                        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                     else:
-                        py_name = '✎FOR THE PERIOD {} {}, {} - {} {}, {} #[{}]_{}'.format(self.from_month.currentText(),
+                        py_name = '✎FOR THE PERIOD {} {}, {} - {} {}, {} #_{}_[{}]'.format(self.from_month.currentText(),
                                                                         self.from_day.currentText(),
                                                                         self.from_year.currentText(),
                                                                         self.to_month.currentText(),
                                                                         self.to_day.currentText(),
                                                                         self.to_year.currentText(),
-                                                                        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
-                                                                        self.office.currentText())
+                                                                        self.office.currentText(),
+                                                                        datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
                 s = payroll_bundle.insert().values(
                     payroll_date_from=py_date_from,
                     payroll_date_to=py_date_to,
@@ -1042,8 +1046,10 @@ class Add_Payroll_Dialogue(QDialog,add_payroll_ui):
 
 
     def show_payroll_home(self):
+        global payroll_home_search
         global payroll_home_list_dict
         global payroll_home_list_widget
+        payroll_home_search.setCurrentIndex(0)
         payroll_home_list_widget.clear()
         payroll_home_list_dict = {}
 
