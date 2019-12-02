@@ -1082,11 +1082,15 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
         global payroll_employee_dict
         global designation_dict
         global salary_grade_dicts
-        self._add_employee_name_combo.clear()
-        self._add_designation_combo.clear()
 
-        for key,value in payroll_employee_dict.items():
-            self._add_employee_name_combo.addItem(key)
+        self._add_employee_name_combo.clear()
+        self._add_employee_design.setEnabled(False)
+        self._add_employee_design2.setEnabled(False)
+        self._add_designation_combo.clear()
+        self._employee_name_list.setVisible(False)
+        self._add_employee_name_combo.setVisible(False)
+        #for key,value in payroll_employee_dict.items():
+        #    self._add_employee_name_combo.addItem(key)
         for key,value in designation_dict.items():
             self._add_designation_combo.addItem(key)
 
@@ -1102,6 +1106,31 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
     def Handle_Button_Changes(self):
         self._add_designation_button.clicked.connect(self.add_designation)
         self._add_designation_combo.currentIndexChanged.connect(self.monthly_rate_show)
+        self._add_employee_name_edit.textChanged.connect(self.on_textChanged)
+        self._employee_name_list.clicked.connect(self.employee_list_clicked)
+
+
+
+
+
+    def on_textChanged(self):
+        self._employee_name_list.clear()
+        global payroll_employee_dict
+        self._employee_name_list.setVisible(True)
+        if self._add_employee_name_edit.text() == '':
+            for key, value in payroll_employee_dict.items():
+                self._employee_name_list.addItem(key)
+        else:
+            for key, value in payroll_employee_dict.items():
+                if str(self._add_employee_name_edit.text()).lower() in str(key).lower():
+                    self._employee_name_list.addItem(key)
+
+    def employee_list_clicked(self):
+        self._add_employee_name_edit.setText(self._employee_name_list.currentItem().text())
+        self._employee_name_list.setVisible(False)
+
+
+
 
 
     def monthly_rate_show(self):
@@ -1131,9 +1160,10 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
 
         self.operationType = operationType
         #Name Combo
-        index = self._add_employee_name_combo.findText(payroll_record_list[3])
-        if index >= 0:
-            self._add_employee_name_combo.setCurrentIndex(index)
+        # index = self._add_employee_name_combo.findText(payroll_record_list[3])
+        # if index >= 0:
+        #     self._add_employee_name_combo.setCurrentIndex(index)
+        self._add_employee_name_edit.setText(payroll_record_list[3])
         #Add Designation Combo
         index = self._add_designation_combo.findText(payroll_record_list[4])
         if index >= 0:
@@ -1244,8 +1274,10 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
         if self.operationType == 'add':
             s = payroll_record.insert().values(
                 payrollid=int(payroll_ae_secret_id.text()),
-                employee_id=int(payroll_employee_dict[self._add_employee_name_combo.currentText()]),
-                name=self._add_employee_name_combo.currentText(),
+                # employee_id=int(payroll_employee_dict[self._add_employee_name_combo.currentText()]),
+                # name=self._add_employee_name_combo.currentText(),
+                employee_id=int(payroll_employee_dict[self._add_employee_name_edit.text()]),
+                name=self._add_employee_name_edit.text(),
                 designation=self._add_designation_combo.currentText(),
                 monthly_rate=float(self._add_monthly_rate.text()),
                 amount_accrued=float(amount_accrued),
@@ -1275,8 +1307,10 @@ class Add_Employee_Dialogue(QDialog,add_employee_ui):
                 payroll_record.c.recordid == self.edit_id).\
                 values(
                 payrollid=int(payroll_ae_secret_id.text()),
-                employee_id=int(payroll_employee_dict[self._add_employee_name_combo.currentText()]),
-                name=self._add_employee_name_combo.currentText(),
+                # employee_id=int(payroll_employee_dict[self._add_employee_name_combo.currentText()]),
+                # name=self._add_employee_name_combo.currentText(),
+                employee_id=int(payroll_employee_dict[self._add_employee_name_edit.text()]),
+                name=self._add_employee_name_edit.text(),
                 designation=self._add_designation_combo.currentText(),
                 monthly_rate=float(self._add_monthly_rate.text()),
                 amount_accrued=float(amount_accrued),
